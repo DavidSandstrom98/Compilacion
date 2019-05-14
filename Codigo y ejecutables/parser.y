@@ -77,13 +77,14 @@
 %type <str> variable
 %type <expr> expresion
 %type <number> M
-//%type <numlist> N
 
+%left TNOT
+%left TOR 
+%left TAND
 %nonassoc TEQUAL TGREATEQ TFEWEQ TNOTEQ TGREATER TFEWER TASSIG
 %left TPLUS TMINUS
 %left TMUL TDIV
-%left TOR 
-%left TAND
+
 
 %start programa
 
@@ -200,9 +201,6 @@ lista_de_sentencias : sentencia lista_de_sentencias {
 
 
 
-
-
-
 sentencia : variable TASSIG expresion TSEMIC
             {
 				codigo.anadirInstruccion(*$1 + " := " + $3->str + ";");
@@ -301,9 +299,9 @@ variable : TIDENTIFIER {$$ = $1;}
 
 expresion : expresion TOR M expresion
 			{
+				codigo.completarInstrucciones($1->falses, $3);
 				$$ = new expresionstruct;
 
-				codigo.completarInstrucciones($1->falses, $3);
 				expresionstruct tmp;
 				tmp.trues = *unir($1->trues, $4->trues);
 				tmp.falses = $4->falses;
@@ -312,9 +310,9 @@ expresion : expresion TOR M expresion
 
 			| expresion TAND M expresion
 			{
+				codigo.completarInstrucciones($1->trues, $3);
 				$$ = new expresionstruct;
 
-			    codigo.completarInstrucciones($1->trues, $3);
 			   	expresionstruct tmp;
 				tmp.trues = $4->trues;
 				tmp.falses = *unir($1->falses, $4->falses);
@@ -456,14 +454,17 @@ expresionstruct makearithmetic(std::string &s1, std::string &s2, std::string &s3
 	return tmp;
 }
 
-vector<int> *unir(vector<int> lis1, vector<int> lis2){
+vector<int> *unir(vector<int> lis1, vector<int> lis2)
+{
 	vector<int>* v = new vector<int>(lis1);
 	v->insert(v->end(), lis2.begin(), lis2.end());
 	return v;
 }
 
-void fixSkips(vector<int> lis1){
-	for(std::vector<int>::iterator i=lis1.begin(); i!=lis1.end(); ++i){
+void fixSkips(vector<int> lis1)
+{
+	for(std::vector<int>::iterator i=lis1.begin(); i!=lis1.end(); ++i)
+	{
 		codigo.completarInstrucciones(*(new vector<int>(1,*i)), *i+2); 
 	}
 }
