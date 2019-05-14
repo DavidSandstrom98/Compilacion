@@ -1,0 +1,28 @@
+program bueno_2{ var a_123: integer;
+	
+	var c_123: float;
+	procedure prueba(abc: in out integer){ var b_123: float;
+		a_123 = (1.23e0 + (12) - 54.233e-4)/12;
+		skip if a_123 == (b_123 - 23);
+		while(a_123 < 45){
+			while(b_123 < 45){
+				 /* COMENTARIO */
+				while(1234.0e4 == (122 + 24 * 27)){
+					println(12.00032322323);
+				};
+			};
+		};
+	
+	};
+	read(a_123);println(a_123);
+	skip if(a_123 > (b_123 > 123));
+	while(d_123 > e_123){
+		do{
+			do{
+				do{
+					if(a_123) then {read(a_123);};
+				} until e_123 else{};
+			} until f_123 > e_123 else{ f_123 = 1;};
+		} until e_123 == g_123 else{do{} until g_123 else{};};
+	};
+};

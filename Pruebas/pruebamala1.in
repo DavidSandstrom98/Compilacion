@@ -1,0 +1,22 @@
+program malo_1{
+	var aux: float;
+	procedure prueba(aux: in out integer){
+		var aux2: integer;
+
+		aux2 = (5.0e-4 + (123/24));
+		/* Declaracion de subprogramas tras sentencias, error de sintaxis */
+		procedure prueba_anidada(aux3, aux4, aux5: out float){
+			while(aux3 >= aux2){
+				if(aux3 > aux4) then {
+					aux3 = aux4 -2;
+				};
+				if(aux3 >= aux4) then {
+					aux4 = aux3 + 2;
+				};
+			};
+		};
+		skip if 5 == (3+2);
+	};
+	read(aux4);
+	if aux4 > aux then{ do{aux = aux + 1; } until aux > aux4 else{ aux = aux - 1;};};
+};

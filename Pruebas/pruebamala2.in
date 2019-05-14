@@ -1,0 +1,29 @@
+program malo_2{
+	var a,b,c: integer;
+	while(a > b){
+		if(a-5 > b) then {
+			a = b - 5.0e4;
+			b = a + 54.02112;
+		};
+		do{skip if 5-3 == d; read(d);} until d == 7 else{ println(d-3);};
+		if(a-4*b-3/2+(56 - 3) >= 27) then{
+			if(a) then {
+				/* Error en el léxico, numero real incorrecto */
+				a = a + 4.E-3;	
+			};
+		};
+	};
+	while(b>a){
+		while(b-2>a){
+			do{
+				read(c);
+				a = a + c;
+			} until a == 200 else{
+				read(d);
+				a = a - d*c;
+			};		
+		};
+		println(a+c);
+		skip if (a < c + (c/5));	
+	};
+};

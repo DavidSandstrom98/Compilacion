@@ -1,0 +1,27 @@
+program bueno_1
+{
+var v_1, v_2: float;
+procedure prueba
+{
+	var v3: integer;
+	procedure prueba_anidada(v4, v5 : in out integer; v6: out float){ v7 = 1.000e-4; };
+	do{ /* COMENTARIO */
+		skip if (v4 > 0);
+		if 1 /= v4 then { 
+			v4 = v4 + 0.1;
+		};
+	} until v4 > v3 else { read(v4); };
+};
+procedure prueba2(v_8: in float){
+	skip if (211.05E+4 > (12 + 24)); read(v_8);
+};
+v_1 = 1234 + 24.3E-3;
+while(v_1 == v_2){
+	
+	if(v_1 > v_2 + v_3 * (v_2 - v_3)) then{
+		println( v_1 );
+	};
+	v_1 = 0;	
+};
+};
+/** ESTO/ES*UN*COMENTARIO *****/

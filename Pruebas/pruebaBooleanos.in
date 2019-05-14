@@ -1,0 +1,10 @@
+program bueno_1
+{
+var v_1, v_2: float;
+
+if v_1 > v_2 and v_1 == v_2 then {
+	println( v_1 );
+};
+
+};
+/** ESTO/ES*UN*COMENTARIO *****/
