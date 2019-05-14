@@ -19,7 +19,7 @@
 
 	struct expresionstruct makecomparison(std::string &s1, std::string &s2, std::string &s3);
 	struct expresionstruct makearithmetic(std::string &s1, std::string &s2, std::string &s3);
-	struct expresionstruct makeNot(std::string &s1);
+
 	//Función unir de dos vectores
 	vector<int> *unir(vector<int> lis1, vector<int> lis2);
 
@@ -52,7 +52,8 @@
 %token <str> TWHILE TDO TUNTIL TSKIP
 %token <str> TREAD TPRINT
 %token <str> TVAR TIN TOUT TINOUT TTIPEFLOAT TTIPEINTEGER TPROCEDURE
-%token <str> TAND TOR TEQUAL TGREATEQ TFEWEQ TNOTEQ TGREATER TFEWER TNOT
+%token <str> TAND TOR TNOT
+%token <str> TEQUAL TGREATEQ TFEWEQ TNOTEQ TGREATER TFEWER
 %token <str> TLBRACE TRBRACE TLPAREN TRPAREN TCOMMA TDOUBLEDOT 
 
 
@@ -81,8 +82,8 @@
 %nonassoc TEQUAL TGREATEQ TFEWEQ TNOTEQ TGREATER TFEWER TASSIG
 %left TPLUS TMINUS
 %left TMUL TDIV
-%left TAND TOR 
-
+%left TOR 
+%left TAND
 
 %start programa
 
@@ -298,7 +299,41 @@ variable : TIDENTIFIER {$$ = $1;}
 
 
 
-expresion : expresion TEQUAL expresion 
+expresion : expresion TOR M expresion
+			{
+				$$ = new expresionstruct;
+
+				codigo.completarInstrucciones($1->falses, $3);
+				expresionstruct tmp;
+				tmp.trues = *unir($1->trues, $4->trues);
+				tmp.falses = $4->falses;
+				*$$ = tmp;
+			}
+
+			| expresion TAND M expresion
+			{
+				$$ = new expresionstruct;
+
+			    codigo.completarInstrucciones($1->trues, $3);
+			   	expresionstruct tmp;
+				tmp.trues = $4->trues;
+				tmp.falses = *unir($1->falses, $4->falses);
+				*$$ = tmp;
+			}
+
+
+			| TNOT expresion
+			{
+				$$ = new expresionstruct;
+				expresionstruct tmp;
+
+				tmp.trues = $2->falses;
+				tmp.falses = $2->trues;
+
+				*$$ = tmp;
+			}
+			
+			|expresion TEQUAL expresion 
 			{ 
                 $$ = new expresionstruct;
 			    *$$ = makecomparison($1->str,*$2,$3->str) ; 
@@ -385,44 +420,8 @@ expresion : expresion TEQUAL expresion
 			    delete $1; 
 				delete $3;
             }
-			
-			| expresion TOR M expresion
-			{
-				$$ = new expresionstruct;
 
-				codigo.completarInstrucciones($1->falses, $3);
-				expresionstruct tmp;
-				tmp.trues = *unir($1->trues, $4->trues);
-				tmp.falses = $4->falses;
-				*$$ = tmp;
-			}
-
-			| expresion TAND M expresion
-			{
-				$$ = new expresionstruct;
-
-			    codigo.completarInstrucciones($1->trues, $3);
-			   	expresionstruct tmp;
-				tmp.trues = $4->trues;
-				tmp.falses = *unir($1->falses, $4->falses);
-				*$$ = tmp;
-			}
-
-
-			| TNOT expresion
-			{
-				$$ = new expresionstruct;
-				expresionstruct tmp;
-
-				tmp.trues = $2->trues;
-				tmp.falses = $2->falses;
-
-				*$$ = tmp;
-			}
-			
-
-
-            | TIDENTIFIER {$$ = new expresionstruct; $$->str = *$1;}
+            
             | TINTEGER {$$ = new expresionstruct; $$->str = *$1;}
             | TFLOAT {$$ = new expresionstruct; $$->str = *$1;}
             | TLPAREN expresion TRPAREN 
@@ -432,7 +431,9 @@ expresion : expresion TEQUAL expresion
 
 				$$->trues = $2->trues;
 				$$->falses = $2->falses;
-			};
+			}
+			| TIDENTIFIER {$$ = new expresionstruct; $$->str = *$1;}
+			;
 
 
 %%
@@ -454,23 +455,6 @@ expresionstruct makearithmetic(std::string &s1, std::string &s2, std::string &s3
 	codigo.anadirInstruccion(tmp.str + " := " + s1 +" "+ s2+" " + s3 + ";");     
 	return tmp;
 }
-
-expresionstruct makeRelational(std::string &s1, std::string &s2, std::string &s3) 
-{
-	expresionstruct tmp; 
-	tmp.str = codigo.nuevoId();
-	codigo.anadirInstruccion(tmp.str + " := " + s1 +" "+ s2+" " + s3 + ";");     
-	return tmp;
-}
-
-expresionstruct makeNot(std::string &s1)
-{
-	expresionstruct tmp; 
-	tmp.str = codigo.nuevoId();
-	codigo.anadirInstruccion(tmp.str + " := not " + s1 + ";") ;     
-	return tmp;
-}
-
 
 vector<int> *unir(vector<int> lis1, vector<int> lis2){
 	vector<int>* v = new vector<int>(lis1);

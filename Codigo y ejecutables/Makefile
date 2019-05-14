@@ -15,5 +15,9 @@ tokens.cpp: tokens.l parser.hpp Aux.hpp
 parser: $(FUENTES) Codigo.hpp Aux.hpp
 	g++ $(CFLAGS) -o $@ $(FUENTES) 
 
-prueba:  parser ../Pruebas/prueba1.in 
+prueba:  parser ../Pruebas/prueba1.in ../Pruebas/prueba2.in ../Pruebas/pruebamala1.in ../Pruebas/pruebamala2.in ../Pruebas/pruebaBooleanos.in
+	./parser <../Pruebas/prueba1.in
+	./parser <../Pruebas/prueba2.in
+	./parser <../Pruebas/pruebamala1.in
+	./parser <../Pruebas/pruebamala2.in
 	./parser <../Pruebas/pruebaBooleanos.in
