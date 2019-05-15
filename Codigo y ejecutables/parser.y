@@ -49,7 +49,7 @@
 %token <str> TSEMIC TASSIG
 %token <str> TPROGRAM
 %token <str> TIF TTHEN TELSE
-%token <str> TWHILE TDO TUNTIL TSKIP
+%token <str> TWHILE TDO TUNTIL TSKIP TFOR TFROM TTO
 %token <str> TREAD TPRINT
 %token <str> TVAR TIN TOUT TINOUT TTIPEFLOAT TTIPEINTEGER TPROCEDURE
 %token <str> TAND TOR TNOT
@@ -78,9 +78,9 @@
 %type <expr> expresion
 %type <number> M
 
-%left TNOT
-%left TOR 
 %left TAND
+%left TOR
+%left TNOT
 %nonassoc TEQUAL TGREATEQ TFEWEQ TNOTEQ TGREATER TFEWER TASSIG
 %left TPLUS TMINUS
 %left TMUL TDIV
@@ -220,6 +220,24 @@ sentencia : variable TASSIG expresion TSEMIC
 				$$ = $6;
             }
 
+			| TFOR TIDENTIFIER TFROM TINTEGER TTO TINTEGER TDO M TLBRACE 
+			{
+				codigo.anadirInstruccion(*$2 + " := " + *$4 + ";");
+				string tmp = codigo.nuevoId();
+				codigo.anadirInstruccion(tmp + " := " + *$6 + ";");
+				codigo.anadirInstruccion("if " + *$2 + " > " + tmp + " goto");
+				
+
+			}lista_de_sentencias TRBRACE TSEMIC{
+
+				codigo.anadirInstruccion(*$2 + " := " + *$2 + "+" + "1;");
+				codigo.anadirInstruccion("goto "+std::to_string($8+2)+ ";");
+				std::vector<int> a;
+				a.push_back($8+2);
+				codigo.completarInstrucciones(a, codigo.obtenRef());
+				$$=new vector<int>();
+			}
+
 
             | TWHILE M expresion TLBRACE M lista_de_sentencias M TRBRACE TSEMIC 
 			{
@@ -302,10 +320,8 @@ expresion : expresion TOR M expresion
 				codigo.completarInstrucciones($1->falses, $3);
 				$$ = new expresionstruct;
 
-				expresionstruct tmp;
-				tmp.trues = *unir($1->trues, $4->trues);
-				tmp.falses = $4->falses;
-				*$$ = tmp;
+				$$->trues = *unir($1->trues, $4->trues);
+				$$->falses = $4->falses;
 			}
 
 			| expresion TAND M expresion
@@ -313,22 +329,16 @@ expresion : expresion TOR M expresion
 				codigo.completarInstrucciones($1->trues, $3);
 				$$ = new expresionstruct;
 
-			   	expresionstruct tmp;
-				tmp.trues = $4->trues;
-				tmp.falses = *unir($1->falses, $4->falses);
-				*$$ = tmp;
+				$$->trues = $4->trues;
+				$$->falses = *unir($1->falses, $4->falses);
 			}
-
 
 			| TNOT expresion
 			{
 				$$ = new expresionstruct;
-				expresionstruct tmp;
 
-				tmp.trues = $2->falses;
-				tmp.falses = $2->trues;
-
-				*$$ = tmp;
+				$$->trues = $2->falses;
+				$$->falses = $2->trues;
 			}
 			
 			|expresion TEQUAL expresion 

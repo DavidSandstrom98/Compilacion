@@ -1,0 +1,14 @@
+program bueno_1
+{
+var v_1, v_2: float;
+
+for v_1 from 10 to 50 do {
+	println( v_1 );
+	println( v_1 );
+	
+	println( v_1 );
+};
+v_2 = 3;
+
+};
+/** ESTO/ES*UN*COMENTARIO *****/

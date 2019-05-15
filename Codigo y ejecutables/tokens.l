@@ -26,6 +26,12 @@
 
 "while"					TOKEN(TWHILE);
 
+"for"					TOKEN(TFOR);
+
+"from"					TOKEN(TFROM);
+
+"to"					TOKEN(TTO);
+
 "do"					TOKEN(TDO);
 
 "until"					TOKEN(TUNTIL);
