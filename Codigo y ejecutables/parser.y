@@ -78,8 +78,8 @@
 %type <expr> expresion
 %type <number> M
 
-%left TAND
 %left TOR
+%left TAND
 %left TNOT
 %nonassoc TEQUAL TGREATEQ TFEWEQ TNOTEQ TGREATER TFEWER TASSIG
 %left TPLUS TMINUS
@@ -220,11 +220,11 @@ sentencia : variable TASSIG expresion TSEMIC
 				$$ = $6;
             }
 
-			| TFOR TIDENTIFIER TFROM TINTEGER TTO TINTEGER TDO M TLBRACE 
+			| TFOR TIDENTIFIER TFROM expresion TTO expresion TDO M TLBRACE 
 			{
-				codigo.anadirInstruccion(*$2 + " := " + *$4 + ";");
+				codigo.anadirInstruccion(*$2 + " := " + $4->str + ";");
 				string tmp = codigo.nuevoId();
-				codigo.anadirInstruccion(tmp + " := " + *$6 + ";");
+				codigo.anadirInstruccion(tmp + " := " + $6->str + ";");
 				codigo.anadirInstruccion("if " + *$2 + " > " + tmp + " goto");
 				
 
