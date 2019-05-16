@@ -1,3 +1,14 @@
+/*
+	Mediante este fichero se comprueba el correcto funcionamiento
+	de la traducción de lo siguiente:
+		-Declaraciones.
+		-procedimientos.
+		-Estructura de control While.
+		-Estructura de control If.
+	Además de ello, también se comprueba el correcto funcionamiento de 
+	la traducción de los comentarios (no debe producir nada su traducción),
+	así como la traducción de algunas estructuras anidadas.
+*/
 program bueno_1
 {
 var v_1, v_2: float;

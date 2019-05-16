@@ -1,3 +1,9 @@
+/*
+	Mediante este fichero podemos comprobar el correcto funcionamiento 
+	de la traducción de expresiones booleanas empleadas en las estructuras
+	if. 
+*/
+
 program bueno_1
 {
 var v_1, v_2: float;

@@ -1,3 +1,15 @@
+/*
+	Mediante este fichero se puede comprobar el correcto funcionamiento de 
+	la nueva estructura de control implementada. La estructura for.
+
+	En este fichero se incluyen tres pruebas:
+		- En la priemera el bucle for se encuentra sin ninguna otra estructura
+		  anidada.
+		- En la segunda prueba podemos encontrar dos buclñes for anidados.
+		- En la tercera podemos encontrar un bucle for dentro de un 
+		  con un bucle while con un If en su interior.
+*/
+
 program bueno_1
 {
 var v_1, v_2: float;

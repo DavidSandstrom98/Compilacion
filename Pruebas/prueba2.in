@@ -1,3 +1,13 @@
+/*
+	Este fichero se centra en realizar pruebas sobre el 
+	anidamiento de estructuras, destacando las estructuras:
+		-Do While
+		-Skip If
+		-If.
+	Como puede comprobarse mediante la ejecución de la aplicación,
+	están correctamente descritas.
+*/
+
 program bueno_2{ var a_123: integer;
 	
 	var c_123: float;

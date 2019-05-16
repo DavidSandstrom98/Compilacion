@@ -1,3 +1,7 @@
+/*
+	
+*/
+
 program malo_2{
 	var a,b,c: integer;
 	while(a > b){

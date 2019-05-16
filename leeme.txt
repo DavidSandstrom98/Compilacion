@@ -1,0 +1,16 @@
+Esta  práctica ha sido realizada por David Sandström Daparte. En ella se han 
+implementado los objetivos mínimos, así como los siguintes objetivos opcionales:
+    -Traducción de expresiones Booleanas.
+    -Una nueva estructura de control: el bucle for.
+Para poder realizar las pruebas, se incluye un fichero Makefile el cual permite
+compilar la aplicación, así como realizar todas las pruebas que en la 
+presente entrega se incluyen. Estas permiten comprobar el funcionamiento de los
+objetivos obligatorios, así como los opcionales.
+
+Se han incluído los siguientes ficheros de prueba (todos ellos incluídos en la subcarpeta Pruebas):
+    -PruebaBuena1.in
+    -PruebaBuena2.in
+    -PruebaBooleanos.in
+    -PruebaFor.in
+    -PruebaMala1.in
+    -PruebaMala2.in

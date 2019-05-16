@@ -1,3 +1,7 @@
+/*
+	
+*/
+
 program malo_1{
 	var aux: float;
 	procedure prueba(aux: in out integer){
