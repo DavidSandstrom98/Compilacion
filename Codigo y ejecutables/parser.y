@@ -225,13 +225,12 @@ sentencia : variable TASSIG expresion TSEMIC
 				codigo.anadirInstruccion(*$2 + " := " + $4->str + ";");
 				string tmp = codigo.nuevoId();
 				codigo.anadirInstruccion(tmp + " := " + $6->str + ";");
-				codigo.anadirInstruccion("if " + *$2 + " > " + tmp + " goto");
-				
-
-			}lista_de_sentencias TRBRACE TSEMIC{
-
-				codigo.anadirInstruccion(*$2 + " := " + *$2 + "+" + "1;");
-				codigo.anadirInstruccion("goto "+std::to_string($8+2)+ ";");
+				codigo.anadirInstruccion("if " + *$2 + " > " + tmp + " goto");	
+			}
+			lista_de_sentencias TRBRACE TSEMIC
+			{
+				codigo.anadirInstruccion(*$2 + " := " + *$2 + " + " + "1;");
+				codigo.anadirInstruccion("goto " + std::to_string($8+2) + ";");
 				std::vector<int> a;
 				a.push_back($8+2);
 				codigo.completarInstrucciones(a, codigo.obtenRef());

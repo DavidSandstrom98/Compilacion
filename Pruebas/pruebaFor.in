@@ -3,10 +3,12 @@ program bueno_1
 var v_1, v_2: float;
 
 for v_1 from 10 * 2 + 3  to 50 * v_2 + 3  do {
-	println( v_1 );
+	while(b_123 < 45){
+		/* COMENTARIO */
+		
+	};
 
 };
 v_2 = 3;
 
 };
-/** ESTO/ES*UN*COMENTARIO *****/
