@@ -1,0 +1,520 @@
+\documentclass[12pt,a4paper, landscape]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+%\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[table]{xcolor}
+\usepackage{tgheros}
+\usepackage{enumerate}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{etoolbox}
+\usepackage[shortlabels]{enumitem}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+\usepackage{anysize}
+
+\usepackage{amsmath,amssymb,amsthm,textcomp}
+\usepackage{enumerate}
+\usepackage{pdflscape}
+\usepackage{multicol}
+\usepackage{pgfplots}
+\usepackage{pdflscape}
+\usepackage{mathtools}
+\pgfplotsset{compat=1.15}
+\usepackage{tikz}
+\usetikzlibrary{arrows,shapes,positioning,lindenmayersystems}
+
+\usepackage{geometry}
+
+
+\linespread{1.1}
+
+\newcommand{\linia}{\rule{\linewidth}{0.5pt}}
+
+% custom theorems if needed
+\newtheoremstyle{mytheor}
+    {1ex}{1ex}{\normalfont}{0pt}{\scshape}{.}{1ex}
+    {{\thmname{#1 }}{\thmnumber{#2}}{\thmnote{ (#3)}}}
+
+\theoremstyle{mytheor}
+\newtheorem{defi}{Definition}
+
+
+% custom footers and headers
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{David Sandström}
+\chead{}
+\rhead{}
+\lfoot{Documentación}
+\cfoot{}
+\rfoot{Página \thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+%
+\definecolor{lightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{mGreen}{rgb}{0,0.6,0}
+
+\newcommand{\zerodisplayskips}{%
+  \setlength{\abovedisplayskip}{1pt}%
+  \setlength{\belowdisplayskip}{0pt}%
+  \setlength{\abovedisplayshortskip}{0pt}%
+  \setlength{\belowdisplayshortskip}{0pt}}
+\appto{\normalsize}{\zerodisplayskips}
+\appto{\small}{\zerodisplayskips}
+\appto{\footnotesize}{\zerodisplayskips}
+
+
+%%%----------%%%----------%%%----------%%%----------%%%
+\marginsize{3cm}{3cm}{2cm}{2cm}
+%\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\begin{document}
+
+\begin{titlepage}
+
+  \newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+  
+  \center % Center everything on the page
+   
+  %----------------------------------------------------------------------------------------
+  %	HEADING SECTIONS
+  %----------------------------------------------------------------------------------------
+  
+  \textsc{\LARGE Compilación}\\[1.5cm] % Name of your university/college
+  %\textsc{\Large Entrega cuarta}\\[0.5cm] % Major heading such as course name
+  %\textsc{\large Minor Heading}\\[0.5cm] % Minor heading such as course title
+  
+  %----------------------------------------------------------------------------------------
+  %	TITLE SECTION
+  %----------------------------------------------------------------------------------------
+  
+  \HRule \\[0.4cm]
+  { \huge \bfseries Entrega final de la práctica individual}\\[0.4cm] % Title of your document
+  \HRule \\[1.5cm]
+   
+  %----------------------------------------------------------------------------------------
+  %	AUTHOR SECTION
+  %----------------------------------------------------------------------------------------
+  
+  
+  % If you don't want a supervisor, uncomment the two lines below and remove the section above
+	\Large \emph{Author:}\\
+ \textsc{David Sandström Daparte}\\
+ dsandstrom001
+  \\[2cm] % Your name
+  
+  %----------------------------------------------------------------------------------------
+  %	DATE SECTION
+  %----------------------------------------------------------------------------------------
+  
+  {\large \today}\\[1cm] % Date, change the \today to a set date if you want to be precise
+  
+  %----------------------------------------------------------------------------------------
+  %	LOGO SECTION
+  %----------------------------------------------------------------------------------------
+  %\begin{center}
+   % \includegraphics[width=10cm,height=10cm,keepaspectratio]{ehu-pdf.pdf}
+  %\end{center}
+ 
+  
+  %----------------------------------------------------------------------------------------
+  %\begin{abstract}
+   % Documento que recoge los resultados obtenidos mediante la realización de la práctica grupal.
+  %\end{abstract}
+  \vfill % Fill the rest of the page with whitespace
+  
+\end{titlepage}
+\newpage
+\tableofcontents
+\newpage
+
+\section{Objetivos entregados}
+En primer lugar cabe destacar que el presente documento se ha realizado en modo apaisado por facilitar la comprensión del EDTS.
+Para esta práctica se han implementado los siguientes objetivos:
+\begin{enumerate}
+\item Implementación del analizador léxico y sintáctico. Desarrollo del ETDS.
+\item Implementación del traductor.
+\item Traducción de expresiones booleanas.
+\item Implementación de una nueva estructura de control. El bucle for.
+\end{enumerate}
+
+
+\section{Autoevaluación}
+A mi parecer, teniendo en cuenta la corrección del apartado de traducción de expresiones booleanas y la complejidad de la estructura de control añadida, opino que mi nota debería ser un \textbf{7,5}.
+
+\newpage
+
+
+\section{Descripción de los tokens empleados}
+\bgroup
+\rowcolors{2}{gray!25}{white}
+\renewcommand{\arraystretch}{1.2}
+\setlength{\arrayrulewidth}{0.5mm}
+\begin{longtable}[c]{|c|c|c|c|}
+ \hline
+ \rowcolor{gray!50}
+Nombre del token               & Descripción informal                                                                                                                    & Expresión LEX                  & Lexemas \\ \hline
+\endhead
+\multicolumn{1}{|c|}{TPROGRAM} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Es una palabra reservada que se compone por los caracteres\\ p r o g r a m\end{tabular}} & \multicolumn{1}{c|}{"program"} & program \\ \hline
+\multicolumn{1}{|c|}{TIF}      & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Es una palabra reservada que se compone por los caracteres\\ i f\end{tabular}}           & \multicolumn{1}{c|}{"if"}      & if      \\ \hline
+\multicolumn{1}{|c|}{TTHEN}    & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Es una palabra reservada que se compone por los caracteres\\ t h e n\end{tabular}}       & \multicolumn{1}{c|}{"then"}    & then    \\ \hline
+\multicolumn{1}{|c|}{TWHILE}   & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Es una palabra reservada que se compone por los caracteres\\ w h i l e\end{tabular}}     & \multicolumn{1}{c|}{"while"}   & while   \\ \hline
+TFOR         & \begin{tabular}[c]{@{}c@{}}Es una palabra reservada que se compone por los caracteres\\ f o r\end{tabular}         & "for"     & for     \\ \hline
+\multicolumn{1}{|c|}{TDO}      & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Es una palabra reservada que se compone por los caracteres\\ d o\end{tabular}}           & \multicolumn{1}{c|}{"do"}      & do      \\ \hline
+\multicolumn{1}{|c|}{TUNTIL}   & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Es una palabra reservada que se compone por los caracteres\\ u n t i l\end{tabular}}     & \multicolumn{1}{c|}{"unHl"}    & unHl    \\ \hline
+\multicolumn{1}{|c|}{TELSE}    & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Es una palabra reservada que se compone por los caracteres\\ e l s e\end{tabular}}       & \multicolumn{1}{c|}{"else"}    & else    \\ \hline
+\multicolumn{1}{|c|}{TSKIP}    & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Es una palabra reservada que se compone por los caracteres\\ s k i p\end{tabular}}       & \multicolumn{1}{c|}{"skip"}    & skip    \\ \hline
+\multicolumn{1}{|c|}{TREAD}    & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Es una palabra reservada que se compone por los caracteres\\ r e a d\end{tabular}}       & \multicolumn{1}{c|}{"read"}    & read    \\ \hline
+\multicolumn{1}{|c|}{TPRINT}   & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Es una palabra reservada que se compone por los caracteres\\ p r i n t l n\end{tabular}} & \multicolumn{1}{c|}{"println"} & println \\ \hline
+TVAR         & \begin{tabular}[c]{@{}c@{}}Es una palabra reservada que se compone por los caracteres\\ v a r\end{tabular}             & "var"             & var             \\ \hline
+TINOUT       & \begin{tabular}[c]{@{}c@{}}Es una palabra reservada que se compone por los caracteres\\ i n o u t\end{tabular}         & "in out"          & in out          \\ \hline
+TIN          & \begin{tabular}[c]{@{}c@{}}Es una palabra reservada que se compone por los caracteres\\ i n\end{tabular}               & "in"              & in              \\ \hline
+TOUT         & \begin{tabular}[c]{@{}c@{}}Es una palabra reservada que se compone por los caracteres\\ o u t\end{tabular}             & "out"             & out             \\ \hline
+TTIPEFLOAT   & \begin{tabular}[c]{@{}c@{}}Es una palabra reservada que se compone por los caracteres\\ f l o a t\end{tabular}         & "float"           & float           \\ \hline
+TTIPEINTEGER & \begin{tabular}[c]{@{}c@{}}Es una palabra reservada que se compone por los caracteres\\ i n t e g e r\end{tabular}     & "integer"         & integer         \\ \hline
+TPROCEDURE   & \begin{tabular}[c]{@{}c@{}}Es una palabra reservada que se compone por los caracteres\\ p r o c e d u r e\end{tabular} & "procedure"       & procedure       \\ \hline
+TOR          & \begin{tabular}[c]{@{}c@{}}Es una palabra reservada que se compone por los caracteres\\ o r\end{tabular}               & "or"              & or              \\ \hline
+TAND         & \begin{tabular}[c]{@{}c@{}}Es una palabra reservada que se compone por los caracteres\\ a n d\end{tabular}             & "and"             & and             \\ \hline
+TNOT         & \begin{tabular}[c]{@{}c@{}}Es una palabra reservada que se compone por los caracteres\\ n o t\end{tabular}             & "not"             & not             \\ \hline
+TEQUAL       & \begin{tabular}[c]{@{}c@{}}Es una palabra reservada que se compone por los caracteres\\ = =\end{tabular}               & "=="              & ==              \\ \hline
+TGREATEQ     & \begin{tabular}[c]{@{}c@{}}Es una palabra reservada que se compone por los caracteres\\ \textgreater =\end{tabular}    & "\textgreater{}=" & \textgreater{}= \\ \hline
+TFEWEQ       & \begin{tabular}[c]{@{}c@{}}Es una palabra reservada que se compone por los caracteres\\ \textless =\end{tabular}       & "\textless{}="    & \textless{}=    \\ \hline
+TNOTEQ       & \begin{tabular}[c]{@{}c@{}}Es una palabra reservada que se compone por los\\ caracteres / =\end{tabular}               & "/="              & /=              \\ \hline
+TGREATER     & \multicolumn{1}{l|}{Es una palabra reservada que se compone por el caracter \textgreater{}}                                                                                                                                                                                                                                                                                                                 & "\textgreater{}"                                                    & \textgreater{}                                                                                                                                                                                                                                   \\ \hline
+TFEWER       & \multicolumn{1}{l|}{Es una palabra reservada que se compone por el caracter \textless{}}                                                                                                                                                                                                                                                                                                                    & "\textless{}"                                                       & \textless{}                                                                                                                                                                                                                                      \\ \hline
+TASSIG       & \multicolumn{1}{l|}{Es una palabra reservada que se compone por el caracter =}                                                                                                                                                                                                                                                                                                                              & "="                                                                 & =                                                                                                                                                                                                                                                \\ \hline
+TLBRACE      & \multicolumn{1}{l|}{Es una palabra reservada que se compone por el caracter \{}                                                                                                                                                                                                                                                                                                                             & \{                                                                  & \{                                                                                                                                                                                                                                               \\ \hline
+TRBRACE      & \multicolumn{1}{l|}{Es una palabra reservada que se compone por el caracter \}}                                                                                                                                                                                                                                                                                                                             & \}                                                                  & \}                                                                                                                                                                                                                                               \\ \hline
+TLPAREN      & \multicolumn{1}{l|}{Es una palabra reservada que se compone por el caracter (}                                                                                                                                                                                                                                                                                                                              & \textbackslash{}(                                                   & (                                                                                                                                                                                                                                                \\ \hline
+TRPAREN      & \multicolumn{1}{l|}{Es una palabra reservada que se compone por el caracter )}                                                                                                                                                                                                                                                                                                                              & \textbackslash{})                                                   & )                                                                                                                                                                                                                                                \\ \hline
+TSEMIC       & \multicolumn{1}{l|}{Es una palabra reservada que se compone por el caracter ;}                                                                                                                                                                                                                                                                                                                              & ";"                                                                 & ;                                                                                                                                                                                                                                                \\ \hline
+TCOMMA       & \multicolumn{1}{l|}{Es una palabra reservada que se compone por el caracter ,}                                                                                                                                                                                                                                                                                                                              & ","                                                                 & ,                                                                                                                                                                                                                                                \\ \hline
+TDOUBLEDOT   & \multicolumn{1}{l|}{Es una palabra reservada que se compone por el caracter :}                                                                                                                                                                                                                                                                                                                              & ":"                                                                 & :                                                                                                                                                                                                                                                \\ \hline
+TMUL         & \multicolumn{1}{l|}{Es una palabra reservada que se compone por el caracter *}                                                                                                                                                                                                                                                                                                                              & \textbackslash{}*                                                   & *                                                                                                                                                                                                                                                \\ \hline
+TPLUS        & \multicolumn{1}{l|}{Es una palabra reservada que se compone por el caracter +}                                                                                                                                                                                                                                                                                                                              & \textbackslash{}+                                                   & +                                                                                                                                                                                                                                                \\ \hline
+TMINUS       & \multicolumn{1}{l|}{Es una palabra reservada que se compone por el caracter -}                                                                                                                                                                                                                                                                                                                              & \textbackslash{}-                                                   & -                                                                                                                                                                                                                                                \\ \hline
+TDIV         & \multicolumn{1}{l|}{Es una palabra reservada que se compone por el caracter /}                                                                                                                                                                                                                                                                                                                              & \textbackslash{}/                                                   & /                                                                                                                                                                                                                                                \\ \hline
+
+TINTEGER     & Concatenación de dígitos de longitud mayor o igual a uno.                                                              & {[}0-9{]}+        & \multicolumn{1}{l|}{\begin{tabular}[c]{@{}l@{}}Acepta:\\    1. 0\\    2. 0034\\    3. 450\\    4. 010980\\ \\ No acepta:\\    1.  0a0\\    2. 90i90\\    3. 13.34.67\\    4. 89w89\end{tabular}} \\ \hline
+TFLOAT       & \begin{tabular}[c]{@{}c@{}}Los números reales se representan con una secuencia de\\ dígitos (de al menos un dígito), seguido por un punto y una\\ secuencia de dígitos (de al menos un dígito). Posteriormente,\\ pueden incluir el exponente mediante la letra "E" o "e"\\ pudiendo especificar si es posiHvo o negaHvo; a esto, le sigue\\ una secuencia de dígitos (de al menos un dígito).\end{tabular} & {[}0-9{]}+\textbackslash{}.{[}0-9{]}+({[}eE{]}{[}-+{]}?{[}0-9{]}+)? & \multicolumn{1}{l|}{\begin{tabular}[c]{@{}l@{}}Acepta:\\    1. 0.0\\    2. 00.00e+45\\    3. 00000010.1e+900\\    4. 90.01E-0\\    5. 9.2E10\\    6. 9.2e10\\ \\ No acepta:\\    1. .23\\    2. 0.45e+\\    3. 45.E-4\\    4. 9.9E\end{tabular}} \\ \hline
+ \end{longtable}
+\newpage
+\egroup
+
+\section{Gramática empleada}
+
+\begin{flalign*}
+    programa \to &  \text{ \textbf{program id}} &\\
+                & bloque;\\
+\end{flalign*}
+\begin{flalign*}
+    bloque \to & \text{ \{ declaraciones}&\\
+                & \text{\ \ \ \ decl\_de\_subprogs}\\
+                &\text {\ \ \ \ lista\_de\_sentencias }\\
+                &\text{\ \}}\\
+\end{flalign*}
+\begin{flalign*}
+    delcaraciones \to & \text{ \textbf{var} lista\_de\_ident : tipo ; declaraciones}&\\
+                |\ &\xi\\
+\end{flalign*}
+\begin{flalign*}
+    lista\_de\_ident \to & \text{ \textbf{id} resto\_lista\_id}&\\
+\end{flalign*}
+\begin{flalign*}
+    resto\_lista\_id \to & \text{ \textbf{, id} resto\_lista\_id}&\\
+            |\ &\xi\\
+\end{flalign*}
+\begin{flalign*}
+    tipo \to & \text{ \textbf{integer} } |\text{ \textbf{float}}&\\
+\end{flalign*}
+\begin{flalign*}
+    decl\_de\_subprogs \to &\text{ decl\_de\_subprograma decl\_de\_subprogs}&\\
+        | & \ \xi
+\end{flalign*}
+\begin{flalign*}
+        decl\_de\_subprograma \to & \text{ \textbf{procedure id} argumentos}&\\
+                        &   \text{bloque;}\\
+\end{flalign*}
+\begin{flalign*}
+    argumentos \to & \text{ (lista\_de\_param)}&\\
+                |\ &\xi\\
+\end{flalign*}
+\begin{flalign*}
+    lista\_de\_param \to & \text{ lista\_de\_ident : clase\_par tipo resto\_lis\_de\_param}&\\
+\end{flalign*}
+\begin{flalign*}
+    clase\_par \to & \text{ \textbf{in} } | \text{ \textbf{out} } | \text{ \textbf{in out}}&\\
+\end{flalign*}
+\begin{flalign*}       
+        resto\_lis\_de\_param \to &\text{ ; lista\_de\_ident : clase\_par tipo resto\_lis\_de\_param}&\\  
+         |\ &\xi\\
+\end{flalign*}
+\begin{flalign*}
+         lista\_de\_sentencias \to & \text{ sentencia lista\_de\_sentencias}&\\
+          |\ &\xi\\
+\end{flalign*}
+\begin{flalign*}
+sentencia \to & \text{ variable = expresion ;}&\\
+          |&\text{ \textbf{if} expresion \textbf{then} \{ lista\_de\_sentencias \};}\\
+          |&\text{ \textbf{while} expresion  \{ lista\_de\_sentencias \};}\\
+          |&\text{ \textbf{do} \{ lista\_de\_sentencias \} \textbf{until} expresion \textbf{else} \{ lista\_de\_sentencias \};}\\
+          |&\text{ \textbf{skip} \textbf{if} expresion ;}\\
+          |&\text{ \textbf{read} ( variable ) ;}\\
+          |&\text{ \textbf{println} ( expresion ) ;}\\\\
+         variable \to &\ id
+\end{flalign*}
+
+\begin{flalign*}
+    expresion \to & \text{ expresion $==$ expresion}&\\
+        |&\text{ expresion $>$ expresion}\\
+    |&\text{ expresion $<$ expresion}\\
+    |&\text{ expresion $>=$ expresion}\\
+    |&\text{ expresion $<=$ expresion}\\
+    |&\text{ expresion $/=$ expresion}\\
+    |&\text{ expresion $+$ expresion}\\
+    |&\text{ expresion $-$ expresion}\\
+    |&\text{ expresion $*$ expresion}\\
+    |&\text{ expresion $/$ expresion}\\
+    |&\text{ \textbf{id}}\\
+    |&\text{ \textbf{num\_entero}}\\
+    |&\text{\textbf{ num\_real}}\\
+    |&\text{ ( expresion )}
+\end{flalign*}
+\section{Explicación de los símbolos y sus atributos}
+En primer lugar cabe destacar que para la resolución de los objetivos opcionales solo se han introducido un total de 4 símbolos terminales:
+\begin{enumerate}
+\item for
+\item and
+\item or
+\item not
+\end{enumerate}
+Y ninguno de ellos cuenta con ningún atributo. Es por ello por lo que no se mencionan en los dos siguientes apartados.
+\subsection{Símbolos no terminales}
+Los símbolos no terminales empleados para la resolución de la práctica son los que a continuación se detallan, así como los atributos de cada uno de ellos:
+\begin{enumerate}
+  \item \textbf{lista\_de\_ident}: no terminal que almacena una lista de identificadores. Emplea el siguiente atributo:
+  \begin{enumerate}
+    \item .lnom: almacena todos los identificadores que puedan aparecer en ciertas situaciones.
+  \end{enumerate}
+  \item \textbf{tipo}: no terminal que almacena los tipos de las variables declaradas. Emplea el siguiente atributo:
+  \begin{enumerate}
+    \item .clase: almacena el tipo de las variables, empleado en este caso para diferenciar las variables de tipo "real" y "entero".
+  \end{enumerate}
+  \item \textbf{clase\_par}: no terminal que almacena el tipo de cada uno de cada uno de los parámetros que se le pasan a una subrutina. Emplea el siguiente atributo:
+  \begin{enumerate}
+    \item .tipo: almacena el tipo de cada parámetro. En caso de que el parámetro sea de tipo "in" tomará el valor "val" y en caso de que el parámetro sea de tipo "out" o "in out" el valor del atributo será "ref".
+  \end{enumerate}
+  \item \textbf{lista\_de\_sentencias}: no terminal que almacena un listado de sentencias leídas como parte del programa de entrada. Algunos ejemplos de las sentencias que puede almacenar son: \textbf{if}, \textbf{while}... Emplea el siguiente atributo:
+  \begin{enumerate}
+    \item .skip: almacena las referencias de todas las instrucciones skip almacenadas en la lista.
+  \end{enumerate}
+  \item \textbf{sentencia}: no terminal que almacena las sentencias empleadas en el programa a traducir. Emplea el siguiente atributo
+  \begin{enumerate}
+    \item .skip: referencia en la que se encuentra la sentencia goto asociada a la instrucción.
+  \end{enumerate}
+  \item \textbf{variable}: no terminal que almacena una de las variables del programa. Emplea el siguiente atributo:
+  \begin{enumerate}
+    \item .nombre: nombre de la variable.
+  \end{enumerate}
+  \item \textbf{expresion}: no terminal que almacena una expresión aritmética o lógica. Emplea los siguientes atributos:
+  \begin{enumerate}
+    \item .true: almacena la referencia en la que se encuentra el goto que habrá de ejecutarse en caso de cumplirse la condición.
+    \item .false: almacena la referencia en la que se encuentra el goto que habrá de ejecutarse en caso de no cumplirse la condición.
+    \item .nombre: valor registrado por la expresión.
+  \end{enumerate}
+  \item \textbf{M}: no terminal que almacena la referencia de la instrucción actual. Emplea el siguiente atributo:
+  \begin{enumerate}
+    \item .ref: empleado para almacenar la referencia de la instrucción.
+  \end{enumerate}
+\end{enumerate}
+
+\subsection{Símbolos terminales}
+
+Los símbolos terminales empleados para la resolución de la práctica son los que a continuación se detallan, así como los atributos de cada uno de ellos:
+\begin{enumerate}
+  \item \textbf{id}: terminal que guarda el identificador de una variable. Emplea el siguiente atributo:
+  \begin{enumerate}
+    \item .nombre: empleado para almacenar el identificador en las situaciones en que sea necesario.
+  \end{enumerate}
+  \item \textbf{entero}: terminal que guarda un número entero. Emplea el siguiente atributo:
+  \begin{enumerate}
+    \item .nombre: valor del número entero.
+  \end{enumerate}
+  \item \textbf{real}: terminal que guarda un número real. Emplea el siguiente atributo:
+  \begin{enumerate}
+    \item .nombre: valor del número real.
+  \end{enumerate}
+\end{enumerate}
+
+\newpage
+\section{Descripción de las abstracciones funcionales empleadas}
+Las abstracciones funcionales empleadas son las siguientes:
+\begin{itemize}
+  \item \textbf{anadir\_inst(instruccion)}: recibe como entrada el código de una instrucción. Añade esa instrucción al codigo traducido.
+  \item \textbf{nuevo\_id()}: crea un nuevo id con la forma $T_{k+1}$, siendo k la cantidad de identificadores que se habian creado hasta el momento. Mediante esta función se obtienen los identificadores temporales empleados para traducir las expresiones.
+  \item \textbf{anadir\_declaracion(lista, tipo)}: por cada nombre de la \underline{lista} de entrada, empezando por el primero y hasta el último añade una instrucción de esta forma: \[nombre : tipo\] Esta función es empleada para procesar todas las declaraciones de variables que pueda contener el código a compilar.
+  \item \textbf{anadir(lista, nombre)}: añade el nombre al comienzo de la lista de entrada y retorna la lista con dicha modificación aplicada.
+  \item \textbf{inilista(nombre)}: crea una lista con el nombre que recibe como entrada y retorna la lista creada.
+  \item \textbf{completar(valor, referencia)}: añade el valor indicado como parámetro de la función (valor) al final de la instrucción cuya referencia se indica mediante el parámetro referencia. Mediante esta función podemos completar las instrucciones "goto", cuya referencia desconozcamos en el momento de añadir la instrucción.
+  \item \textbf{lista\_vacia()}: retorna una lista vacía.
+  \item \textbf{unir($lista_1$, $lista_2$)}: retorna la unión de ambas listas.
+  \item \textbf{escribir()}: una vez completada la lectura y traducción, vuelca todos los resultados en un fichero de texto.
+  \item \textbf{vacio()}: función que retorna el valor \textit{null} o lo que sea necesario asignar como vacío.
+\end{itemize}
+
+
+\section{Esquema de traducción dirigido por la sintaxis}
+\subsection{Significado de la sentencia Skip If}
+A la sentencia Skip If dentro del do-until-else le hemos dotado del siguiente significado: dependiendo del valor que esta produzca y donde se encuentre:
+\begin{enumerate}
+\item Si produce el valor true:
+    \begin{itemize}
+    \item Si se encuentra en la sección do: se pasa a evaluar de nuevo la condición del until, ignorando las instrucciones restantes del bloque do.
+    \item Si se encuentra en la sección else: no hace nada. Simplemente pasa a ejecutar la siguiente instrucción. Como caso excepcional si se da esta situación además de que la estructura do-until-else se encuentra dentro de un while, el skip if nos llevaría al inicio del bucle while.
+    \end{itemize}
+\item Si produce el valor false : se ejecuta la siguiente instrucción independientemente de en que sección se encuentre.
+\end{enumerate}
+
+
+\subsection{ETDS básico}
+\begin{center}
+  \begin{align*}
+    \text{\textbf{programa}} \to\ & program\ id\ \{ anadir\_inst( prog|| id.nombre || ;); \}\\
+    & bloque\  ;\  \{ anadir\_inst(halt; ); escribir();\}\\\\
+    \text{\textbf{ bloque}} \to\ &\{ declaraciones\ decl\_de\_subprogs\ lista\_de\_sentencias \}\\\\
+    \text{\textbf{declaraciones}} \to\ & var\ lista\_de\_ident\ :\ tipo;\ \{ anadir\_declaracion(lista\_de\_ident.lnom,\ tipo.clase);\}\ declaraciones\\
+    |\ &\xi\\\\
+    \text{\textbf{lista\_de\_ident}} \to\ & id\ resto\_lista\_id\ \{lista\_de\_ident.lnom=anadir(resto\_lista\_id.lnom,\ id.nombre);\}\\\\
+    \text{\textbf{ resto\_lista\_id}} \to\ & ,id\ resto\_lista\_id\  \{resto\_lista\_id.lnom=anadir(resto\_lista\_id_1.lnom,\ id.nombre);\} \\
+    |\ &\xi\ \{resto\_lista\_id.lnom=lista\_vacia();\}\\\\
+     \text{\textbf{tipo}} \to\ & integer\ \{tipo.clase="int"; \}\\
+    |\ & float\ \{tipo.clase="real"; \}\\\\
+  \end{align*}
+\end{center}
+
+\begin{center}
+  \begin{alignat*}{2}
+     \text{\textbf{decl\_de\_subprogs}} \to\ &decl\_de\_subprograma\ decl\_de\_subprogs\\
+    |\ &\xi\\\\
+     \text{\textbf{decl\_de\_subprograma}} \to\ &procedure\ id\ \{anadir\_inst( proc|| id.nombre || ;); \}\ argumentos\ bloque ; \{anadir\_inst(endproc;); \}\\\\
+     \text{\textbf{argumentos}} \to\ & ( lista\_de\_param )\\
+    |\ &\xi\\\\
+     \text{\textbf{lista\_de\_param}} \to\ & lista\_de\_ident\ :\ clase\_par\ tipo\ \{ anadir\_declaracion(lista\_de\_ident.lnom, clase\_par.tipo||\_||tipo.clase);\}\\
+    &resto\_lis\_de\_param\\\\
+    \text{\textbf{clase\_par}} \to\ &in\ \{ clase\_par.tipo = "val";\}\\ 
+    |\ &out  \{ clase\_par.tipo = "ref";\}\\
+    |\ &in\ out\ \{ clase\_par.tipo = "ref";\}\\\\
+     \text{\textbf{resto\_lis\_de\_param}} \to\ &;\ lista\_de\_ident\ :\ clase\_par\ tipo\ \{ anadir\_declaracion(lista\_de\_ident.lnom, clase\_par.tipo||\_||tipo.clase);\}\\
+    &resto\_lis\_de\_param\\
+    |\ &\xi\\\\
+     \text{\textbf{lista\_de\_sentencias}} \to\ & sentencia\ lista\_de\_sentencias \begin{Bmatrix} lista\_de\_sentencias.skip=unir(sentencia.skip, lista\_de\_sentencias_1.skip); \end{Bmatrix} \\
+    |\ &\xi\ \{lista\_de\_sentencias.skip=lista\_vacia();\}\\ 
+  \end{alignat*}
+\end{center}
+
+
+\begin{alignat*}{2}
+  \text{\textbf{sentencia}} \to\ & variable = expresion;\ \begin{Bmatrix} anadir\_inst(variable.nombre||:=||expresion.nombre;);\\ sentencia.skip=lista\_vacia();\end{Bmatrix}\\
+ |\ &if\ expresion\ then\ \{M\ lista\_de\_sentencias\}M; \begin{Bmatrix} completar(expresion.true,M_1.ref); \\ completar(expresion.false,M_2.ref);\\ sentencia.skip=lista\_de\_sentencias.skip \end{Bmatrix} \\
+ |\ &while\ M\ expresion \{M\ lista\_de\_sentencias M\}; \begin{Bmatrix} completar(expresion.true,M_2.ref); \\ completar(expresion.false,M_3.ref+1);\\ anadir\_inst(goto||M_1.ref);\\completar(lista\_sentencias.skip,M_1.ref);\\sentencia.skip:=lista\_vacia(); \end{Bmatrix} \\
+ |\ &do\ M\ \{\ lista\_de\_sentencias \}\ until\ M\ expresion\ else\ M\ \{\ lista\_de\_sentencias\}\ ;\ \begin{Bmatrix} completar(expresion.true,M_1.ref); \\ completar(expresion.false,M_3.ref);\\ completar(lista\_sentencias_1.skip,M_2.ref);\\sentencia.skip:=lista\_vacia(); \end{Bmatrix} \\
+ |\ &skip\ if\ expresion\ M;\ \begin{Bmatrix} completar(expresion.false,M.ref); \\ sentencia.skip =expresion.true; \end{Bmatrix}\\
+ |\ &read\ (variable);\ \begin{Bmatrix} anadir\_inst(read||variable.nombre||;);\\ sentencia.skip=lista\_vacia();\end{Bmatrix}\\
+ |\ &println \ (expresion);\  \begin{Bmatrix} anadir\_inst(write||expresion.nombre||;); \\ anadir\_inst(writeln;); \\ sentencia.skip=lista\_vacia(); \end{Bmatrix}\\
+\end{alignat*}
+
+\begin{center}
+  \begin{alignat*}{2}
+     \text{\textbf{variable}} \to\ & id\ \{variable.nombre = id.nombre;\} \\\\
+     \text{\textbf{M}} \to\ &\xi\ \{M.ref=obtenref();\}
+  \end{alignat*}
+\end{center}
+
+\begin{center}
+  \begin{alignat*}{2}
+     \text{\textbf{expresion}} \to\ &  expresion == && expresion \begin{Bmatrix} expresion.nombre = vacio();\\ expresion.true=inilista(obtenref()); \\  expresion.false=inilista(obtenref()+1);\\ anadir\_inst(if||expresion_1.nombre||==||expresion_2.nombre||goto);\\ anadir\_inst(goto);\end{Bmatrix} \\
+    |\ & expresion > && expresion                \begin{Bmatrix} expresion.nombre = vacio();\\ expresion.true=inilista(obtenref()); \\  expresion.false=inilista(obtenref()+1);\\ anadir\_inst(if||expresion_1.nombre||>||expresion_2.nombre||goto);\\ anadir\_inst(goto);\end{Bmatrix} \\
+    |\ & expresion < && expresion                   \begin{Bmatrix} expresion.nombre = vacio();\\ expresion.true=inilista(obtenref()); \\  expresion.false=inilista(obtenref()+1);\\ anadir\_inst(if||expresion_1.nombre||<||expresion_2.nombre||goto);\\ anadir\_inst(goto);\end{Bmatrix} \\
+  \end{alignat*}
+  \begin{alignat*}{2}
+    |\ & expresion \geq && expresion                \begin{Bmatrix} expresion.nombre = vacio();\\ expresion.true=inilista(obtenref()); \\  expresion.false=inilista(obtenref()+1);\\ anadir\_inst(if||expresion_1.nombre||\geq||expresion_2.nombre||goto);\\ anadir\_inst(goto);\end{Bmatrix} \\
+    |\ & expresion\ \leq\ && expresion \begin{Bmatrix} expresion.nombre = vacio();\\ expresion.true=inilista(obtenref()); \\  expresion.false=inilista(obtenref()+1);\\ anadir\_inst(if||expresion_1.nombre||\leq||expresion_2.nombre||goto);\\ anadir\_inst(goto);\end{Bmatrix} \\
+    |\ & expresion\ \neq\ && expresion \begin{Bmatrix} expresion.nombre = vacio();\\ expresion.true=inilista(obtenref()); \\  expresion.false=inilista(obtenref()+1);\\ anadir\_inst(if||expresion_1.nombre||\neq||expresion_2.nombre||goto);\\ anadir\_inst(goto);\end{Bmatrix} \\
+    |\ &  expresion\ + && expresion \begin{Bmatrix} expresion.nombre = nuevo\_id();\\ expresion.true = vacio();\\ expresion.false = vacio(); \\  anadir\_inst(expresion.nombre||:=||expresion_1.nombre||+||expresion_2.nombre||;);\end{Bmatrix} \\
+  \end{alignat*}
+
+  \begin{alignat*}{2}
+  |\ & expresion\ - && expresion \begin{Bmatrix} expresion.nombre = nuevo\_id();\\ expresion.true = vacio();\\ expresion.false = vacio(); \\ anadir\_inst(expresion.nombre||:=||expresion_1.nombre||-||expresion_2.nombre||;);\end{Bmatrix} \\
+  |\ & expresion\ * && expresion \begin{Bmatrix} expresion.nombre = nuevo\_id();\\ expresion.true = vacio();\\ expresion.false = vacio(); \\  anadir\_inst(expresion.nombre||:=||expresion_1.nombre||*||expresion_2.nombre||;);\end{Bmatrix} \\
+  |\ & expresion\ / && expresion \begin{Bmatrix} expresion.nombre = nuevo\_id();\\ expresion.true = vacio();\\ expresion.false = vacio(); \\  anadir\_inst(expresion.nombre||:=||expresion_1.nombre||/||expresion_2.nombre||;);\end{Bmatrix} \\\\
+  | &\ id\ &&\begin{Bmatrix}  expresion.nombre = id.nombre;\\ expresion.true = vacio();\\expresion.false = vacio(); \end{Bmatrix} \\
+  | &\ n\_entero\ &&\begin{Bmatrix} expresion.nombre = entero.nombre;\\ expresion.true = vacio();\\expresion.false = vacio(); \end{Bmatrix}\\
+  | &\ n\_real \ &&\begin{Bmatrix} expresion.nombre = real.nombre; \\ expresion.true = vacio();\\expresion.false = vacio(); \end{Bmatrix}\\
+  | &\ (expresion)\ && \begin{Bmatrix} expresion.nombre = expresion_1.nombre;\\ expresion.true = expresion_1.true;\\ expresion.false = expresion_1.false;\end{Bmatrix}\\
+ \end{alignat*}
+\end{center}
+\subsection{Casos de prueba básicos}
+Para comprobar el correcto funcionamiento del traductor descrito hasta el momento se han implementado 4 ficheros de pruebas ejecutables mediante la aplicación. Los ficheros:
+\begin{itemize}
+\item prueba1.in
+\item prueba2.in
+\end{itemize}
+Incluyen dos fragmentos de código sin errores para comprobar su correcto funcionamiento y los ficheros:
+\begin{itemize}
+\item pruebaMala1.in
+\item pruebaMala2.in
+\end{itemize}
+Contienen código con errores de forma que se pueda probar el comportamiento de la aplicación ante ficheros con errores.
+
+
+\section{Objetivos extra añadidos.}
+\subsection{Tratamiento de expresiones booleanas.}
+\subsubsection{Fragmento añadido al ETDS}
+Partiendo del ETDS previamente expuesto, ha sido necesario realizar el siguiente añadido al mismo con el fin de poder procesar las expresiones booleanas:
+\begin{center}
+     \begin{alignat*}{2}
+      expresion \to\ &  expresion\ or && M\ expresion \begin{Bmatrix} completar(expresion_1, M.ref);\\ expresion.true=unir(expresion_1.true, expresion_2.true); \\  expresion.false=expresion_2.false;\end{Bmatrix} \\
+      |\ & expresion\ and\ && M\ expresion  \begin{Bmatrix} completar(expresion_1, M.ref);\\ expresion.true=expresion_2.true; \\  expresion.false=unir(expresion_1.false, expresion_2.false);\end{Bmatrix}\\
+      |\ & not\ expresion && \begin{Bmatrix} expresion.true=expresion_1.false; \\  expresion.false=expresion_1.true;\end{Bmatrix}
+      \end{alignat*}
+\end{center}
+\subsubsection{ETDS resultante}
+Una vez expuesto el fragmento nuevo añadido al ETDS básico de la práctica, el ETDS resultante es el siguiente: 
+\subsubsection{Casos de prueba}
+Los casos de prueba para comprobar el correcto funcionamiento de la implementación de la traducción de expresiones booleanas puede encontrarse en dos ficheros:
+\begin{enumerate}
+\item \textbf{pruebaBooleanos.in}: este fichero contiene una serie de pruebas correctas para comprobar su buen funcionamiento.
+\item \textbf{pruebaBooleanosMala.in}: este fichero contiene pruebas con fallos para asegurar que la implementación realizada los detecta.
+\end{enumerate}
+
+\subsection{Estructura de control for}
+
+\subsubsection{Fragmento añadido al ETDS}
+\begin{center}
+     \begin{alignat*}{2}
+      sentencia \to & \text{ for id from expresion to expresion do M \{}\begin{Bmatrix} anadir\_inst(id.nombre||:=||expresion_1.nombre);\\ anadir\_inst(if||:=||id.nombre||>||expresion_2.nombre||goto);\end{Bmatrix} \\
+     & lista\_de\_sentencias\ \}; \begin{Bmatrix} anadir\_inst(id.nombre||:=||id.nombre|| +1);\\ anadir\_inst(goto||M.ref +2||;);\\ completar(obtenref(), M.ref+2);\end{Bmatrix} 
+      \end{alignat*}
+\end{center}
+\subsubsection{ETDS resultante}
+\subsubsection{Casos de prueba}
+Los casos de prueba para comprobar el correcto funcionamiento de la implementación de la traducción de la nueva estructura de control:
+\begin{enumerate}
+\item \textbf{pruebaFor.in}: este fichero contiene una serie de pruebas correctas para comprobar su buen funcionamiento.
+\item \textbf{pruebaForMala.in}: este fichero contiene pruebas contiene fallos para asegurar que la implementación realizada los detecta.
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+\end{document}

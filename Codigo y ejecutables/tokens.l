@@ -58,6 +58,12 @@
 
 "procedure"				TOKEN(TPROCEDURE);
 
+"or"                    TOKEN(TOR);
+
+"and"                   TOKEN(TAND);
+
+"not"                   TOKEN(TNOT);
+
 "=="					TOKEN(TEQUAL);
 
 ">="					TOKEN(TGREATEQ);
@@ -72,11 +78,6 @@
 
 "="                     TOKEN(TASSIG);
 
-"or"                    TOKEN(TOR);
-
-"and"                   TOKEN(TAND);
-
-"not"                   TOKEN(TNOT);
 
 \{                      TOKEN(TLBRACE);
 

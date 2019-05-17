@@ -270,7 +270,7 @@ sentencia : variable TASSIG expresion TSEMIC
 				codigo.completarInstrucciones(*$4,$7);
 				
 				//Se inicializa a vector vacio la sentencia, pues todos los skip de la lista de sentencia ya se han completado.
-				$$ = new vector<int>();
+                $$ = $12;
 				delete $8;
             }
 
