@@ -1,4 +1,4 @@
-\documentclass[12pt,a4paper, landscape]{article}
+\documentclass[12pt,a4paper,landscape]{article}
 
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
@@ -48,9 +48,9 @@
 % custom footers and headers
 \usepackage{fancyhdr}
 \pagestyle{fancy}
-\lhead{David Sandström}
+\lhead{}
 \chead{}
-\rhead{}
+\rhead{David Sandström}
 \lfoot{Documentación}
 \cfoot{}
 \rfoot{Página \thepage}
@@ -152,13 +152,13 @@ A mi parecer, teniendo en cuenta la corrección del apartado de traducción de e
 
 \section{Descripción de los tokens empleados}
 \bgroup
-\rowcolors{2}{gray!25}{white}
+\rowcolors{2}{gray!15}{white}
 \renewcommand{\arraystretch}{1.2}
-\setlength{\arrayrulewidth}{0.5mm}
+\setlength{\arrayrulewidth}{0.3mm}
 \begin{longtable}[c]{|c|c|c|c|}
  \hline
  \rowcolor{gray!50}
-Nombre del token               & Descripción informal                                                                                                                    & Expresión LEX                  & Lexemas \\ \hline
+\textbf{Nombre del token}               &\textbf{ Descripción informal }                                                                                                                   & \textbf{Expresión LEX}                  & \textbf{Lexemas} \\ \hline
 \endhead
 \multicolumn{1}{|c|}{TPROGRAM} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Es una palabra reservada que se compone por los caracteres\\ p r o g r a m\end{tabular}} & \multicolumn{1}{c|}{"program"} & program \\ \hline
 \multicolumn{1}{|c|}{TIF}      & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Es una palabra reservada que se compone por los caracteres\\ i f\end{tabular}}           & \multicolumn{1}{c|}{"if"}      & if      \\ \hline
@@ -419,13 +419,13 @@ A la sentencia Skip If dentro del do-until-else le hemos dotado del siguiente si
 
 
 \begin{alignat*}{2}
-  \text{\textbf{sentencia}} \to\ & variable = expresion;\ \begin{Bmatrix} anadir\_inst(variable.nombre||:=||expresion.nombre;);\\ sentencia.skip=lista\_vacia();\end{Bmatrix}\\
+  \text{\textbf{sentencia}} \to\ & variable = expresion;\ \begin{Bmatrix} anadir\_inst(variable.nombre||:=||expresion.nombre;);\\ sentencia.skip=lista\_vacia();\end{Bmatrix}\\
  |\ &if\ expresion\ then\ \{M\ lista\_de\_sentencias\}M; \begin{Bmatrix} completar(expresion.true,M_1.ref); \\ completar(expresion.false,M_2.ref);\\ sentencia.skip=lista\_de\_sentencias.skip \end{Bmatrix} \\
  |\ &while\ M\ expresion \{M\ lista\_de\_sentencias M\}; \begin{Bmatrix} completar(expresion.true,M_2.ref); \\ completar(expresion.false,M_3.ref+1);\\ anadir\_inst(goto||M_1.ref);\\completar(lista\_sentencias.skip,M_1.ref);\\sentencia.skip:=lista\_vacia(); \end{Bmatrix} \\
  |\ &do\ M\ \{\ lista\_de\_sentencias \}\ until\ M\ expresion\ else\ M\ \{\ lista\_de\_sentencias\}\ ;\ \begin{Bmatrix} completar(expresion.true,M_1.ref); \\ completar(expresion.false,M_3.ref);\\ completar(lista\_sentencias_1.skip,M_2.ref);\\sentencia.skip:=lista\_vacia(); \end{Bmatrix} \\
- |\ &skip\ if\ expresion\ M;\ \begin{Bmatrix} completar(expresion.false,M.ref); \\ sentencia.skip =expresion.true; \end{Bmatrix}\\
- |\ &read\ (variable);\ \begin{Bmatrix} anadir\_inst(read||variable.nombre||;);\\ sentencia.skip=lista\_vacia();\end{Bmatrix}\\
- |\ &println \ (expresion);\  \begin{Bmatrix} anadir\_inst(write||expresion.nombre||;); \\ anadir\_inst(writeln;); \\ sentencia.skip=lista\_vacia(); \end{Bmatrix}\\
+ |\ &skip\ if\ expresion\ M;\ \begin{Bmatrix} completar(expresion.false,M.ref); \\ sentencia.skip =expresion.true; \end{Bmatrix}\\
+ |\ &read\ (variable);\ \begin{Bmatrix} anadir\_inst(read||variable.nombre||;);\\ sentencia.skip=lista\_vacia();\end{Bmatrix}\\
+ |\ &println \ (expresion);\  \begin{Bmatrix} anadir\_inst(write||expresion.nombre||;); \\ anadir\_inst(writeln;); \\ sentencia.skip=lista\_vacia(); \end{Bmatrix}\\
 \end{alignat*}
 
 \begin{center}
@@ -478,7 +478,7 @@ Contienen código con errores de forma que se pueda probar el comportamiento de 
 Partiendo del ETDS previamente expuesto, ha sido necesario realizar el siguiente añadido al mismo con el fin de poder procesar las expresiones booleanas:
 \begin{center}
      \begin{alignat*}{2}
-      expresion \to\ &  expresion\ or && M\ expresion \begin{Bmatrix} completar(expresion_1, M.ref);\\ expresion.true=unir(expresion_1.true, expresion_2.true); \\  expresion.false=expresion_2.false;\end{Bmatrix} \\
+     \text{  \textbf{expresion}} \to\ &  expresion\ or && M\ expresion \begin{Bmatrix} completar(expresion_1, M.ref);\\ expresion.true=unir(expresion_1.true, expresion_2.true); \\  expresion.false=expresion_2.false;\end{Bmatrix} \\
       |\ & expresion\ and\ && M\ expresion  \begin{Bmatrix} completar(expresion_1, M.ref);\\ expresion.true=expresion_2.true; \\  expresion.false=unir(expresion_1.false, expresion_2.false);\end{Bmatrix}\\
       |\ & not\ expresion && \begin{Bmatrix} expresion.true=expresion_1.false; \\  expresion.false=expresion_1.true;\end{Bmatrix}
       \end{alignat*}
@@ -497,7 +497,7 @@ Los casos de prueba para comprobar el correcto funcionamiento de la implementaci
 \subsubsection{Fragmento añadido al ETDS}
 \begin{center}
      \begin{alignat*}{2}
-      sentencia \to & \text{ for id from expresion to expresion do M \{}\begin{Bmatrix} anadir\_inst(id.nombre||:=||expresion_1.nombre);\\ anadir\_inst(if||:=||id.nombre||>||expresion_2.nombre||goto);\end{Bmatrix} \\
+      \text{ \textbf{sentencia}} \to & \text{ for id from expresion to expresion do M \{}\begin{Bmatrix} anadir\_inst(id.nombre||:=||expresion_1.nombre);\\ anadir\_inst(if||:=||id.nombre||>||expresion_2.nombre||goto);\end{Bmatrix} \\
      & lista\_de\_sentencias\ \}; \begin{Bmatrix} anadir\_inst(id.nombre||:=||id.nombre|| +1);\\ anadir\_inst(goto||M.ref +2||;);\\ completar(obtenref(), M.ref+2);\end{Bmatrix} 
       \end{alignat*}
 \end{center}
