@@ -134,7 +134,7 @@
 \newpage
 
 \section{Objetivos entregados}
-En primer lugar cabe destacar que el presente documento se ha realizado en modo apaisado por facilitar la comprensión del EDTS.
+En primer lugar cabe destacar que el presente documento se ha realizado en modo apaisado por facilitar la comprensión del ETDS y de la descripción de los tokens.
 Para esta práctica se han implementado los siguientes objetivos:
 \begin{enumerate}
 \item Implementación del analizador léxico y sintáctico. Desarrollo del ETDS.
@@ -188,8 +188,8 @@ TNOTEQ       & \begin{tabular}[c]{@{}c@{}}Es una palabra reservada que se compon
 TGREATER     & \multicolumn{1}{l|}{Es una palabra reservada que se compone por el caracter \textgreater{}}                                                                                                                                                                                                                                                                                                                 & "\textgreater{}"                                                    & \textgreater{}                                                                                                                                                                                                                                   \\ \hline
 TFEWER       & \multicolumn{1}{l|}{Es una palabra reservada que se compone por el caracter \textless{}}                                                                                                                                                                                                                                                                                                                    & "\textless{}"                                                       & \textless{}                                                                                                                                                                                                                                      \\ \hline
 TASSIG       & \multicolumn{1}{l|}{Es una palabra reservada que se compone por el caracter =}                                                                                                                                                                                                                                                                                                                              & "="                                                                 & =                                                                                                                                                                                                                                                \\ \hline
-TLBRACE      & \multicolumn{1}{l|}{Es una palabra reservada que se compone por el caracter \{}                                                                                                                                                                                                                                                                                                                             & \{                                                                  & \{                                                                                                                                                                                                                                               \\ \hline
-TRBRACE      & \multicolumn{1}{l|}{Es una palabra reservada que se compone por el caracter \}}                                                                                                                                                                                                                                                                                                                             & \}                                                                  & \}                                                                                                                                                                                                                                               \\ \hline
+TLBRACE      & \multicolumn{1}{l|}{Es una palabra reservada que se compone por el caracter \{}                                                                                                                                                                                                                                                                                                                             & \textbackslash{}\{                                                                  &\{                                                                                                                                                                                                                                               \\ \hline
+TRBRACE      & \multicolumn{1}{l|}{Es una palabra reservada que se compone por el caracter \}}                                                                                                                                                                                                                                                                                                                             & \textbackslash{}\}                                                                  &\}                                                                                                                                                                                                                                               \\ \hline
 TLPAREN      & \multicolumn{1}{l|}{Es una palabra reservada que se compone por el caracter (}                                                                                                                                                                                                                                                                                                                              & \textbackslash{}(                                                   & (                                                                                                                                                                                                                                                \\ \hline
 TRPAREN      & \multicolumn{1}{l|}{Es una palabra reservada que se compone por el caracter )}                                                                                                                                                                                                                                                                                                                              & \textbackslash{})                                                   & )                                                                                                                                                                                                                                                \\ \hline
 TSEMIC       & \multicolumn{1}{l|}{Es una palabra reservada que se compone por el caracter ;}                                                                                                                                                                                                                                                                                                                              & ";"                                                                 & ;                                                                                                                                                                                                                                                \\ \hline
@@ -201,7 +201,10 @@ TMINUS       & \multicolumn{1}{l|}{Es una palabra reservada que se compone por e
 TDIV         & \multicolumn{1}{l|}{Es una palabra reservada que se compone por el caracter /}                                                                                                                                                                                                                                                                                                                              & \textbackslash{}/                                                   & /                                                                                                                                                                                                                                                \\ \hline
 
 TINTEGER     & Concatenación de dígitos de longitud mayor o igual a uno.                                                              & {[}0-9{]}+        & \multicolumn{1}{l|}{\begin{tabular}[c]{@{}l@{}}Acepta:\\    1. 0\\    2. 0034\\    3. 450\\    4. 010980\\ \\ No acepta:\\    1.  0a0\\    2. 90i90\\    3. 13.34.67\\    4. 89w89\end{tabular}} \\ \hline
-TFLOAT       & \begin{tabular}[c]{@{}c@{}}Los números reales se representan con una secuencia de\\ dígitos (de al menos un dígito), seguido por un punto y una\\ secuencia de dígitos (de al menos un dígito). Posteriormente,\\ pueden incluir el exponente mediante la letra "E" o "e"\\ pudiendo especificar si es posiHvo o negaHvo; a esto, le sigue\\ una secuencia de dígitos (de al menos un dígito).\end{tabular} & {[}0-9{]}+\textbackslash{}.{[}0-9{]}+({[}eE{]}{[}-+{]}?{[}0-9{]}+)? & \multicolumn{1}{l|}{\begin{tabular}[c]{@{}l@{}}Acepta:\\    1. 0.0\\    2. 00.00e+45\\    3. 00000010.1e+900\\    4. 90.01E-0\\    5. 9.2E10\\    6. 9.2e10\\ \\ No acepta:\\    1. .23\\    2. 0.45e+\\    3. 45.E-4\\    4. 9.9E\end{tabular}} \\ \hline
+TFLOAT       & \begin{tabular}[c]{@{}c@{}}Los números reales se representan con una secuencia de\\ dígitos (de al menos un dígito), seguido por un punto y una\\ secuencia de dígitos (de al menos un dígito). Posteriormente,\\ pueden incluir el exponente mediante la letra "E" o "e"\\ pudiendo especificar si es positivo o negativo; a esto, le sigue\\ una secuencia de dígitos (de al menos un dígito).\end{tabular} & {[}0-9{]}+\textbackslash{}.{[}0-9{]}+({[}eE{]}{[}-+{]}?{[}0-9{]}+)? & \multicolumn{1}{l|}{\begin{tabular}[c]{@{}l@{}}Acepta:\\    1. 0.0\\    2. 00.00e+45\\    3. 00000010.1e+900\\    4. 90.01E-0\\    5. 9.2E10\\    6. 9.2e10\\ \\ No acepta:\\    1. .23\\    2. 0.45e+\\    3. 45.E-4\\    4. 9.9E\end{tabular}} \\ \hline
+TIDENTIFIER                                                                                                                                                                                                                            & \begin{tabular}[c]{@{}c@{}}Comienza por un carácter alfabético. Posteriormente, puede\\ tener cualquier combinación de caracteres alfanuméricos,\\ entre los cuales se pueden intercalar un guión bajo seguido\\ como mucho. Nunca termina en guión bajo.\end{tabular} & {[}a-zA-Z{]}(\_?{[}a-zA-Z0-9{]})*                                                                                            & \multicolumn{1}{l|}{\begin{tabular}[c]{@{}l@{}}Acepta:\\ 1.   Z\_9\_22\_1\\ 2.   a\_12\_t\_09\\ 3.   o9l\_j\_fng\_df\\ 4. P\_P\_P\_P\\ \\ No acepta:\\ 1.   01234\\ 2.   \_1\_\\ 3.   pki\_\\ 4.   i09\_\_2\end{tabular}}               \\ \hline
+\begin{tabular}[c]{@{}c@{}}COMENTARIO\\ \\ El comentario es un\\ token, no obstante,\\ no tienen un token\\ explícitamente\\ asignado. Se\\ comprueba su\\ corrección léxica,\\ pero no se le asigna\\ un token como tal.\end{tabular} & \begin{tabular}[c]{@{}c@{}}Los comentarios comienzan por la secuencia de caracteres /*\\ y terminan por la secuencia */, pero no pueden contener la\\ secuencia de caracteres */ entre el comienzo y el final del\\ token.\end{tabular}                                & \textbackslash{}/\textbackslash{}*(({[}*{]}+{[}\textasciicircum{}/*{]})$|${[}\textasciicircum{}*{]})*{[}*{]}+\textbackslash{}/ & \multicolumn{1}{l|}{\begin{tabular}[c]{@{}l@{}}Acepta:\\ 1.   /*****válido/*/\\ 2.   /*//////////*/\\ 3.   /*****/\\ 4.   /*prueba*/\\ \\ No acepta:\\ 1.   /no válido/\\ 2.   /******/**/\\ 3.   /*/\\ 4.   /*prueba/\end{tabular}} \\ \hline
+
  \end{longtable}
 \newpage
 \egroup
@@ -370,14 +373,14 @@ Las abstracciones funcionales empleadas son las siguientes:
 
 \section{Esquema de traducción dirigido por la sintaxis}
 \subsection{Significado de la sentencia Skip If}
-A la sentencia Skip If dentro del do-until-else le hemos dotado del siguiente significado: dependiendo del valor que esta produzca y donde se encuentre:
+A la sentencia Skip If dentro del \textit{do-until-else} le hemos dotado del siguiente significado: dependiendo del valor que su expresión produzca y donde se encuentre:
 \begin{enumerate}
-\item Si produce el valor true:
+\item Si produce el valor \textbf{true}:
     \begin{itemize}
     \item Si se encuentra en la sección do: se pasa a evaluar de nuevo la condición del until, ignorando las instrucciones restantes del bloque do.
-    \item Si se encuentra en la sección else: no hace nada. Simplemente pasa a ejecutar la siguiente instrucción. Como caso excepcional si se da esta situación además de que la estructura do-until-else se encuentra dentro de un while, el skip if nos llevaría al inicio del bucle while.
+    \item Si se encuentra en la sección else: no hace nada. Simplemente pasa a ejecutar la siguiente instrucción. Como caso excepcional si se da esta situación además de que la estructura do-until-else se encuentra dentro de un while/for, el skip if nos llevaría al inicio del bucle while/for.
     \end{itemize}
-\item Si produce el valor false : se ejecuta la siguiente instrucción independientemente de en que sección se encuentre.
+\item Si produce el valor \textbf{false} : se ejecuta la siguiente instrucción independientemente de la sección donde se encuentre.
 \end{enumerate}
 
 
@@ -425,12 +428,12 @@ A la sentencia Skip If dentro del do-until-else le hemos dotado del siguiente si
  |\ &\text{\textbf{do}}\ M\ \{\ lista\_de\_sentencias \}\ \text{\textbf{until}}\ M\ expresion\ \text{\textbf{else}}\ M\ \{\ lista\_de\_sentencias\}\ ;\ \begin{Bmatrix} completar(expresion.true,M_1.ref); \\ completar(expresion.false,M_3.ref);\\ completar(lista\_sentencias_1.skip,M_2.ref);\\sentencia.skip:=lista\_vacia(); \end{Bmatrix} \\
  |\ &\text{\textbf{skip if}}\ expresion\ M;\ \begin{Bmatrix} completar(expresion.false,M.ref); \\ sentencia.skip =expresion.true; \end{Bmatrix}\\
  |\ &\text{\textbf{read }}(variable);\ \begin{Bmatrix} anadir\_inst(read||variable.nombre||;);\\ sentencia.skip=lista\_vacia();\end{Bmatrix}\\
- |\ &\text{\textbf{println }}(expresion);\  \begin{Bmatrix} anadir\_inst(write||expresion.nombre||;); \\ anadir\_inst(writeln;); \\ sentencia.skip=lista\_vacia(); \end{Bmatrix}\\
+ |\ &\text{\textbf{println }}(expresion);\  \begin{Bmatrix} anadir\_inst(write||expresion.nombre||;); \\ anadir\_inst(writeln;); \\ sentencia.skip=lista\_vacia(); \end{Bmatrix}\\\\
+ \text{\textbf{variable}} \to\ & id\ \{variable.nombre = id.nombre;\}
 \end{alignat*}
 
 
-  \begin{alignat*}{2}
-     \text{\textbf{variable}} \to\ & id\ \{variable.nombre = id.nombre;\} \\\\
+  \begin{alignat*}{2} 
      \text{\textbf{M}} \to\ &\xi\ \{M.ref=obtenref();\}
   \end{alignat*}
 
@@ -440,16 +443,16 @@ A la sentencia Skip If dentro del do-until-else le hemos dotado del siguiente si
      \text{\textbf{expresion}} \to\ &  expresion == && expresion \begin{Bmatrix} expresion.nombre = vacio();\\ expresion.true=inilista(obtenref()); \\  expresion.false=inilista(obtenref()+1);\\ anadir\_inst(if||expresion_1.nombre||==||expresion_2.nombre||goto);\\ anadir\_inst(goto);\end{Bmatrix} \\
     |\ & expresion > && expresion                \begin{Bmatrix} expresion.nombre = vacio();\\ expresion.true=inilista(obtenref()); \\  expresion.false=inilista(obtenref()+1);\\ anadir\_inst(if||expresion_1.nombre||>||expresion_2.nombre||goto);\\ anadir\_inst(goto);\end{Bmatrix} \\
     |\ & expresion < && expresion                   \begin{Bmatrix} expresion.nombre = vacio();\\ expresion.true=inilista(obtenref()); \\  expresion.false=inilista(obtenref()+1);\\ anadir\_inst(if||expresion_1.nombre||<||expresion_2.nombre||goto);\\ anadir\_inst(goto);\end{Bmatrix} \\
+        |\ & expresion \geq && expresion                \begin{Bmatrix} expresion.nombre = vacio();\\ expresion.true=inilista(obtenref()); \\  expresion.false=inilista(obtenref()+1);\\ anadir\_inst(if||expresion_1.nombre||\geq||expresion_2.nombre||goto);\\ anadir\_inst(goto);\end{Bmatrix} \\
   \end{alignat*}
   \begin{alignat*}{2}
-    |\ & expresion \geq && expresion                \begin{Bmatrix} expresion.nombre = vacio();\\ expresion.true=inilista(obtenref()); \\  expresion.false=inilista(obtenref()+1);\\ anadir\_inst(if||expresion_1.nombre||\geq||expresion_2.nombre||goto);\\ anadir\_inst(goto);\end{Bmatrix} \\
     |\ & expresion\ \leq\ && expresion \begin{Bmatrix} expresion.nombre = vacio();\\ expresion.true=inilista(obtenref()); \\  expresion.false=inilista(obtenref()+1);\\ anadir\_inst(if||expresion_1.nombre||\leq||expresion_2.nombre||goto);\\ anadir\_inst(goto);\end{Bmatrix} \\
     |\ & expresion\ \neq\ && expresion \begin{Bmatrix} expresion.nombre = vacio();\\ expresion.true=inilista(obtenref()); \\  expresion.false=inilista(obtenref()+1);\\ anadir\_inst(if||expresion_1.nombre||\neq||expresion_2.nombre||goto);\\ anadir\_inst(goto);\end{Bmatrix} \\
     |\ &  expresion\ + && expresion \begin{Bmatrix} expresion.nombre = nuevo\_id();\\ expresion.true = vacio();\\ expresion.false = vacio(); \\  anadir\_inst(expresion.nombre||:=||expresion_1.nombre||+||expresion_2.nombre||;);\end{Bmatrix} \\
+      |\ & expresion\ - && expresion \begin{Bmatrix} expresion.nombre = nuevo\_id();\\ expresion.true = vacio();\\ expresion.false = vacio(); \\ anadir\_inst(expresion.nombre||:=||expresion_1.nombre||-||expresion_2.nombre||;);\end{Bmatrix} \\
   \end{alignat*}
 
   \begin{alignat*}{2}
-  |\ & expresion\ - && expresion \begin{Bmatrix} expresion.nombre = nuevo\_id();\\ expresion.true = vacio();\\ expresion.false = vacio(); \\ anadir\_inst(expresion.nombre||:=||expresion_1.nombre||-||expresion_2.nombre||;);\end{Bmatrix} \\
   |\ & expresion\ * && expresion \begin{Bmatrix} expresion.nombre = nuevo\_id();\\ expresion.true = vacio();\\ expresion.false = vacio(); \\  anadir\_inst(expresion.nombre||:=||expresion_1.nombre||*||expresion_2.nombre||;);\end{Bmatrix} \\
   |\ & expresion\ / && expresion \begin{Bmatrix} expresion.nombre = nuevo\_id();\\ expresion.true = vacio();\\ expresion.false = vacio(); \\  anadir\_inst(expresion.nombre||:=||expresion_1.nombre||/||expresion_2.nombre||;);\end{Bmatrix} \\\\
   | &\ id\ &&\begin{Bmatrix}  expresion.nombre = id.nombre;\\ expresion.true = vacio();\\expresion.false = vacio(); \end{Bmatrix} \\
@@ -481,6 +484,7 @@ Contienen código con errores de forma que se pueda probar el comportamiento de 
                  |&\text{ \textbf{not} expresion}
 \end{flalign*}
 \subsubsection{Gramática resultante}
+La gramática resultante es la descrita con anterioridad en el presente documento con el añadido del subapartado anterior.\\
 \begin{flalign*}
     programa \to &  \text{ \textbf{program id}} &\\
                 & bloque;\\
@@ -561,20 +565,20 @@ sentencia \to & \text{ variable = expresion ;}&\\
     |&\text{\textbf{ num\_real}}\\
     |&\text{ ( expresion )}
 \end{flalign*}
-
+\newpage
 
 \subsubsection{Fragmento añadido al ETDS}
 Partiendo del ETDS previamente expuesto, ha sido necesario realizar el siguiente añadido al mismo con el fin de poder procesar las expresiones booleanas:
 \begin{center}
      \begin{alignat*}{2}
-     \text{  \textbf{expresion}} \to\ &  expresion\ \textbf{or} && M\ expresion \begin{Bmatrix} completar(expresion_1, M.ref);\\ expresion.true=unir(expresion_1.true, expresion_2.true); \\  expresion.false=expresion_2.false;\end{Bmatrix} \\
-      |\ & expresion\ \textbf{and}\ && M\ expresion  \begin{Bmatrix} completar(expresion_1, M.ref);\\ expresion.true=expresion_2.true; \\  expresion.false=unir(expresion_1.false, expresion_2.false);\end{Bmatrix}\\
+     \text{  \textbf{expresion}} \to\ &  expresion\ \textbf{or} && M\ expresion \begin{Bmatrix} completar(expresion_1.false, M.ref);\\ expresion.true=unir(expresion_1.true, expresion_2.true); \\  expresion.false=expresion_2.false;\end{Bmatrix} \\
+      |\ & expresion\ \textbf{and}\ && M\ expresion  \begin{Bmatrix} completar(expresion_1.true, M.ref);\\ expresion.true=expresion_2.true; \\  expresion.false=unir(expresion_1.false, expresion_2.false);\end{Bmatrix}\\
       |\ & \textbf{not}\ expresion && \begin{Bmatrix} expresion.true=expresion_1.false; \\  expresion.false=expresion_1.true;\end{Bmatrix}
       \end{alignat*}
 \end{center}
-
+\newpage
 \subsubsection{ETDS resultante}
-Una vez expuesto el fragmento nuevo añadido al ETDS básico de la práctica, el ETDS resultante es el siguiente:
+El ETDS resultante consiste en el ETDS básico, con el añadido mencionado en el subapartado anterior:
 
 \begin{center}
   \begin{align*}
@@ -619,26 +623,25 @@ Una vez expuesto el fragmento nuevo añadido al ETDS básico de la práctica, el
  |\ &\textbf{do}\ M\ \{\ lista\_de\_sentencias \}\ \textbf{until}\ M\ expresion\ \textbf{else}\ M\ \{\ lista\_de\_sentencias\}\ ;\ \begin{Bmatrix} completar(expresion.true,M_1.ref); \\ completar(expresion.false,M_3.ref);\\ completar(lista\_sentencias_1.skip,M_2.ref);\\sentencia.skip:=lista\_vacia(); \end{Bmatrix} \\
  |\ &\textbf{skip}\ \textbf{if}\ expresion\ M;\ \begin{Bmatrix} completar(expresion.false,M.ref); \\ sentencia.skip =expresion.true; \end{Bmatrix}\\
  |\ &\textbf{read}\ (variable);\ \begin{Bmatrix} anadir\_inst(read||variable.nombre||;);\\ sentencia.skip=lista\_vacia();\end{Bmatrix}\\
- |\ &\textbf{println} \ (expresion);\  \begin{Bmatrix} anadir\_inst(write||expresion.nombre||;); \\ anadir\_inst(writeln;); \\ sentencia.skip=lista\_vacia(); \end{Bmatrix}\\
+ |\ &\textbf{println} \ (expresion);\  \begin{Bmatrix} anadir\_inst(write||expresion.nombre||;); \\ anadir\_inst(writeln;); \\ sentencia.skip=lista\_vacia(); \end{Bmatrix}\\\\
+      \text{\textbf{variable}} \to\ & id\ \{variable.nombre = id.nombre;\} 
 \end{alignat*}
 
 
   \begin{alignat*}{2}
-     \text{\textbf{variable}} \to\ & id\ \{variable.nombre = id.nombre;\} \\\\
-     \text{\textbf{M}} \to\ &\xi\ \{M.ref=obtenref();\}
+     \text{\textbf{M}} \to\ &\xi\ \{M.ref=obtenref();\}\\\\
   \end{alignat*}
-
+\begin{alignat*}{2}
+\text{\textbf{expresion}} \to\ &  expresion\ \textbf{or} && M\ expresion \begin{Bmatrix} completar(expresion_1.false, M.ref);\\ expresion.true=unir(expresion_1.true, expresion_2.true); \\  expresion.false=expresion_2.false;\end{Bmatrix} \\
+      |\ & expresion\ \textbf{and}\ && M\ expresion  \begin{Bmatrix} completar(expresion_1.true, M.ref);\\ expresion.true=expresion_2.true; \\  expresion.false=unir(expresion_1.false, expresion_2.false);\end{Bmatrix}\\
+      |\ & \textbf{not}\ expresion && \begin{Bmatrix} expresion.true=expresion_1.false; \\  expresion.false=expresion_1.true;\end{Bmatrix}\\
+      |\ & expresion == && expresion \begin{Bmatrix} expresion.nombre = vacio();\\ expresion.true=inilista(obtenref()); \\  expresion.false=inilista(obtenref()+1);\\ anadir\_inst(if||expresion_1.nombre||==||expresion_2.nombre||goto);\\ anadir\_inst(goto);\end{Bmatrix} \\
+    |\ & expresion > && expresion                \begin{Bmatrix} expresion.nombre = vacio();\\ expresion.true=inilista(obtenref()); \\  expresion.false=inilista(obtenref()+1);\\ anadir\_inst(if||expresion_1.nombre||>||expresion_2.nombre||goto);\\ anadir\_inst(goto);\end{Bmatrix} \\
+\end{alignat*}
 
 \begin{center}
   \begin{alignat*}{2}
-     \text{\textbf{expresion}} \to\ &  expresion\ \textbf{or} && M\ expresion \begin{Bmatrix} completar(expresion_1, M.ref);\\ expresion.true=unir(expresion_1.true, expresion_2.true); \\  expresion.false=expresion_2.false;\end{Bmatrix} \\
-      |\ & expresion\ \textbf{and}\ && M\ expresion  \begin{Bmatrix} completar(expresion_1, M.ref);\\ expresion.true=expresion_2.true; \\  expresion.false=unir(expresion_1.false, expresion_2.false);\end{Bmatrix}\\
-      |\ & \textbf{not}\ expresion && \begin{Bmatrix} expresion.true=expresion_1.false; \\  expresion.false=expresion_1.true;\end{Bmatrix}\\
-     |\ & expresion == && expresion \begin{Bmatrix} expresion.nombre = vacio();\\ expresion.true=inilista(obtenref()); \\  expresion.false=inilista(obtenref()+1);\\ anadir\_inst(if||expresion_1.nombre||==||expresion_2.nombre||goto);\\ anadir\_inst(goto);\end{Bmatrix} \\
-    |\ & expresion > && expresion                \begin{Bmatrix} expresion.nombre = vacio();\\ expresion.true=inilista(obtenref()); \\  expresion.false=inilista(obtenref()+1);\\ anadir\_inst(if||expresion_1.nombre||>||expresion_2.nombre||goto);\\ anadir\_inst(goto);\end{Bmatrix} \\
     |\ & expresion < && expresion                   \begin{Bmatrix} expresion.nombre = vacio();\\ expresion.true=inilista(obtenref()); \\  expresion.false=inilista(obtenref()+1);\\ anadir\_inst(if||expresion_1.nombre||<||expresion_2.nombre||goto);\\ anadir\_inst(goto);\end{Bmatrix} \\
-  \end{alignat*}
-  \begin{alignat*}{2}
     |\ & expresion \geq && expresion                \begin{Bmatrix} expresion.nombre = vacio();\\ expresion.true=inilista(obtenref()); \\  expresion.false=inilista(obtenref()+1);\\ anadir\_inst(if||expresion_1.nombre||\geq||expresion_2.nombre||goto);\\ anadir\_inst(goto);\end{Bmatrix} \\
     |\ & expresion\ \leq\ && expresion \begin{Bmatrix} expresion.nombre = vacio();\\ expresion.true=inilista(obtenref()); \\  expresion.false=inilista(obtenref()+1);\\ anadir\_inst(if||expresion_1.nombre||\leq||expresion_2.nombre||goto);\\ anadir\_inst(goto);\end{Bmatrix} \\
     |\ & expresion\ \neq\ && expresion \begin{Bmatrix} expresion.nombre = vacio();\\ expresion.true=inilista(obtenref()); \\  expresion.false=inilista(obtenref()+1);\\ anadir\_inst(if||expresion_1.nombre||\neq||expresion_2.nombre||goto);\\ anadir\_inst(goto);\end{Bmatrix} \\
@@ -648,7 +651,7 @@ Una vez expuesto el fragmento nuevo añadido al ETDS básico de la práctica, el
   \begin{alignat*}{2}
   |\ & expresion\ - && expresion \begin{Bmatrix} expresion.nombre = nuevo\_id();\\ expresion.true = vacio();\\ expresion.false = vacio(); \\ anadir\_inst(expresion.nombre||:=||expresion_1.nombre||-||expresion_2.nombre||;);\end{Bmatrix} \\
   |\ & expresion\ * && expresion \begin{Bmatrix} expresion.nombre = nuevo\_id();\\ expresion.true = vacio();\\ expresion.false = vacio(); \\  anadir\_inst(expresion.nombre||:=||expresion_1.nombre||*||expresion_2.nombre||;);\end{Bmatrix} \\
-  |\ & expresion\ / && expresion \begin{Bmatrix} expresion.nombre = nuevo\_id();\\ expresion.true = vacio();\\ expresion.false = vacio(); \\  anadir\_inst(expresion.nombre||:=||expresion_1.nombre||/||expresion_2.nombre||;);\end{Bmatrix} \\\\
+  |\ & expresion\ / && expresion \begin{Bmatrix} expresion.nombre = nuevo\_id();\\ expresion.true = vacio();\\ expresion.false = vacio(); \\  anadir\_inst(expresion.nombre||:=||expresion_1.nombre||/||expresion_2.nombre||;);\end{Bmatrix} \\
   | &\ id\ &&\begin{Bmatrix}  expresion.nombre = id.nombre;\\ expresion.true = vacio();\\expresion.false = vacio(); \end{Bmatrix} \\
   | &\ n\_entero\ &&\begin{Bmatrix} expresion.nombre = entero.nombre;\\ expresion.true = vacio();\\expresion.false = vacio(); \end{Bmatrix}\\
   | &\ n\_real \ &&\begin{Bmatrix} expresion.nombre = real.nombre; \\ expresion.true = vacio();\\expresion.false = vacio(); \end{Bmatrix}\\
@@ -659,8 +662,8 @@ Una vez expuesto el fragmento nuevo añadido al ETDS básico de la práctica, el
 \subsubsection{Casos de prueba}
 Los casos de prueba para comprobar el correcto funcionamiento de la implementación de la traducción de expresiones booleanas puede encontrarse en dos ficheros:
 \begin{enumerate}
-\item \textbf{pruebaBooleanos.in}: este fichero contiene una serie de pruebas correctas para comprobar su buen funcionamiento.
-\item \textbf{pruebaBooleanosMala.in}: este fichero contiene pruebas con fallos para asegurar que la implementación realizada los detecta.
+\item pruebaBooleanos.in: este fichero contiene una serie de pruebas correctas para comprobar su buen funcionamiento.
+\item pruebaBooleanosMala.in: este fichero contiene pruebas con fallos para asegurar que la implementación realizada los detecta.
 \end{enumerate}
 
 
@@ -673,6 +676,7 @@ Los casos de prueba para comprobar el correcto funcionamiento de la implementaci
 
 
 \subsubsection{Gramática resultante}
+Esta gramática consiste en la resultante de la implementación de la traducción de expresiones booleanas con el añadido del subapartado anterior:\\
 \begin{flalign*}
     programa \to &  \text{ \textbf{program id}} &\\
                 & bloque;\\
@@ -681,7 +685,7 @@ Los casos de prueba para comprobar el correcto funcionamiento de la implementaci
     bloque \to & \text{ \{ declaraciones}&\\
                 & \text{\ \ \ \ decl\_de\_subprogs}\\
                 &\text {\ \ \ \ lista\_de\_sentencias }\\
-                &\text{\ \}}\\
+                &\text{\ \}}
 \end{flalign*}
 \begin{flalign*}
     delcaraciones \to & \text{ \textbf{var} lista\_de\_ident : tipo ; declaraciones}&\\
@@ -758,11 +762,11 @@ sentencia \to & \text{ variable = expresion ;}&\\
 
 \subsubsection{Fragmento añadido al ETDS}
 \begin{alignat*}{2}
-      \text{ \textbf{sentencia}} \to & \text{ \textbf{for} id \textbf{from} expresion \textbf{to} expresion \textbf{do} M \{}\begin{Bmatrix} anadir\_inst(id.nombre||:=||expresion_1.nombre);\\ anadir\_inst(if||:=||id.nombre||>||expresion_2.nombre||goto);\end{Bmatrix} \\
-     & lista\_de\_sentencias\ \}; \begin{Bmatrix} anadir\_inst(id.nombre||:=||id.nombre|| +1);\\ anadir\_inst(goto||M.ref +2||;);\\ completar(obtenref(), M.ref+2);\end{Bmatrix} 
+      \text{ \textbf{sentencia}} \to & \text{ \textbf{for} id \textbf{from} expresion \textbf{to} expresion \textbf{do} M \{}\begin{Bmatrix} anadir\_inst(id.nombre||:=||expresion_1.nombre||;);\\ anadir\_inst(if||:=||id.nombre||>||expresion_2.nombre||goto);\end{Bmatrix} \\
+     & lista\_de\_sentencias\ \}; \begin{Bmatrix} anadir\_inst(id.nombre||:=||id.nombre|| + 1||;);\\ anadir\_inst(goto||M.ref +2||;);\\ completar(obtenref(), M.ref+2);\end{Bmatrix} 
       \end{alignat*}
 \subsubsection{ETDS resultante}
-
+El ETDS se compone del ETDS resultante del añadido de las expresiones booleanas, con el añadido mencionado en el subapartado anterior:
 
 \begin{center}
   \begin{align*}
@@ -803,17 +807,19 @@ sentencia \to & \text{ variable = expresion ;}&\\
 \begin{alignat*}{2}
   \text{\textbf{sentencia}} \to\ & variable = expresion;\ \begin{Bmatrix} anadir\_inst(variable.nombre||:=||expresion.nombre;);\\ sentencia.skip=lista\_vacia();\end{Bmatrix}\\
  |&\ \textbf{if}\ expresion\ \textbf{then}\ \{M\ lista\_de\_sentencias\}M; \begin{Bmatrix} completar(expresion.true,M_1.ref); \\ completar(expresion.false,M_2.ref);\\ sentencia.skip=lista\_de\_sentencias.skip \end{Bmatrix} \\
- |&\text{ \textbf{for} id \textbf{from} expresion \textbf{to} expresion \textbf{do} M \{}\begin{Bmatrix} anadir\_inst(id.nombre||:=||expresion_1.nombre);\\ anadir\_inst(if||:=||id.nombre||>||expresion_2.nombre||goto);\end{Bmatrix} \\
-     &\ \ \ \ \ \  lista\_de\_sentencias\ \}; \begin{Bmatrix} anadir\_inst(id.nombre||:=||id.nombre|| +1);\\ anadir\_inst(goto||M.ref +2||;);\\ completar(obtenref(), M.ref+2);\end{Bmatrix}\\ 
+ |&\text{ \textbf{for} id \textbf{from} expresion \textbf{to} expresion \textbf{do} M \{}\begin{Bmatrix} anadir\_inst(id.nombre||:=||expresion_1.nombre||;);\\ anadir\_inst(if||:=||id.nombre||>||expresion_2.nombre||goto);\end{Bmatrix} \\
+     &\ \ \ \ \ \  lista\_de\_sentencias\ \}; \begin{Bmatrix} anadir\_inst(id.nombre||:=||id.nombre|| +1||;);\\ anadir\_inst(goto||M.ref +2||;);\\ completar(obtenref(), M.ref+2);\end{Bmatrix}\\ 
  |\ &\textbf{while}\ M\ expresion \{M\ lista\_de\_sentencias M\}; \begin{Bmatrix} completar(expresion.true,M_2.ref); \\ completar(expresion.false,M_3.ref+1);\\ anadir\_inst(goto||M_1.ref);\\completar(lista\_sentencias.skip,M_1.ref);\\sentencia.skip:=lista\_vacia(); \end{Bmatrix} \\
  |\ &\textbf{do}\ M\ \{\ lista\_de\_sentencias \}\ \textbf{until}\ M\ expresion\ \textbf{else}\ M\ \{\ lista\_de\_sentencias\}\ ;\ \begin{Bmatrix} completar(expresion.true,M_1.ref); \\ completar(expresion.false,M_3.ref);\\ completar(lista\_sentencias_1.skip,M_2.ref);\\sentencia.skip:=lista\_vacia(); \end{Bmatrix} \\
  |\ &\textbf{skip}\ \textbf{if}\ expresion\ M;\ \begin{Bmatrix} completar(expresion.false,M.ref); \\ sentencia.skip =expresion.true; \end{Bmatrix}\\
- |\ &\textbf{read}\ (variable);\ \begin{Bmatrix} anadir\_inst(read||variable.nombre||;);\\ sentencia.skip=lista\_vacia();\end{Bmatrix}\\
- |\ &\textbf{println} \ (expresion);\  \begin{Bmatrix} anadir\_inst(write||expresion.nombre||;); \\ anadir\_inst(writeln;); \\ sentencia.skip=lista\_vacia(); \end{Bmatrix}\\
 \end{alignat*}
 
 
   \begin{alignat*}{2}
+   |\ &\textbf{read}\ (variable);\ \begin{Bmatrix} anadir\_inst(read||variable.nombre||;);\\ sentencia.skip=lista\_vacia();\end{Bmatrix}\\
+ |\ &\textbf{println} \ (expresion);\  \begin{Bmatrix} anadir\_inst(write||expresion.nombre||;); \\ anadir\_inst(writeln;); \\ sentencia.skip=lista\_vacia(); \end{Bmatrix}\\
+ \end{alignat*}
+ \begin{alignat*}{2}
      \text{\textbf{variable}} \to\ & id\ \{variable.nombre = id.nombre;\} \\\\
      \text{\textbf{M}} \to\ &\xi\ \{M.ref=obtenref();\}
   \end{alignat*}
@@ -821,8 +827,8 @@ sentencia \to & \text{ variable = expresion ;}&\\
 
 \begin{center}
   \begin{alignat*}{2}
-     \text{\textbf{expresion}} \to\ &  expresion\ \textbf{or} && M\ expresion \begin{Bmatrix} completar(expresion_1, M.ref);\\ expresion.true=unir(expresion_1.true, expresion_2.true); \\  expresion.false=expresion_2.false;\end{Bmatrix} \\
-      |\ & expresion\ \textbf{and}\ && M\ expresion  \begin{Bmatrix} completar(expresion_1, M.ref);\\ expresion.true=expresion_2.true; \\  expresion.false=unir(expresion_1.false, expresion_2.false);\end{Bmatrix}\\
+     \text{\textbf{expresion}} \to\ &  expresion\ \textbf{or} && M\ expresion \begin{Bmatrix} completar(expresion_1.false, M.ref);\\ expresion.true=unir(expresion_1.true, expresion_2.true); \\  expresion.false=expresion_2.false;\end{Bmatrix} \\
+      |\ & expresion\ \textbf{and}\ && M\ expresion  \begin{Bmatrix} completar(expresion_1.true, M.ref);\\ expresion.true=expresion_2.true; \\  expresion.false=unir(expresion_1.false, expresion_2.false);\end{Bmatrix}\\
       |\ & \textbf{not}\ expresion && \begin{Bmatrix} expresion.true=expresion_1.false; \\  expresion.false=expresion_1.true;\end{Bmatrix}\\
      |\ & expresion == && expresion \begin{Bmatrix} expresion.nombre = vacio();\\ expresion.true=inilista(obtenref()); \\  expresion.false=inilista(obtenref()+1);\\ anadir\_inst(if||expresion_1.nombre||==||expresion_2.nombre||goto);\\ anadir\_inst(goto);\end{Bmatrix} \\
     |\ & expresion > && expresion  \begin{Bmatrix} expresion.nombre = vacio();\\ expresion.true=inilista(obtenref()); \\  expresion.false=inilista(obtenref()+1);\\ anadir\_inst(if||expresion_1.nombre||>||expresion_2.nombre||goto);\\ anadir\_inst(goto);\end{Bmatrix} \\
@@ -838,7 +844,7 @@ sentencia \to & \text{ variable = expresion ;}&\\
   \begin{alignat*}{2}
   |\ & expresion\ - && expresion \begin{Bmatrix} expresion.nombre = nuevo\_id();\\ expresion.true = vacio();\\ expresion.false = vacio(); \\ anadir\_inst(expresion.nombre||:=||expresion_1.nombre||-||expresion_2.nombre||;);\end{Bmatrix} \\
   |\ & expresion\ * && expresion \begin{Bmatrix} expresion.nombre = nuevo\_id();\\ expresion.true = vacio();\\ expresion.false = vacio(); \\  anadir\_inst(expresion.nombre||:=||expresion_1.nombre||*||expresion_2.nombre||;);\end{Bmatrix} \\
-  |\ & expresion\ / && expresion \begin{Bmatrix} expresion.nombre = nuevo\_id();\\ expresion.true = vacio();\\ expresion.false = vacio(); \\  anadir\_inst(expresion.nombre||:=||expresion_1.nombre||/||expresion_2.nombre||;);\end{Bmatrix} \\\\
+  |\ & expresion\ / && expresion \begin{Bmatrix} expresion.nombre = nuevo\_id();\\ expresion.true = vacio();\\ expresion.false = vacio(); \\  anadir\_inst(expresion.nombre||:=||expresion_1.nombre||/||expresion_2.nombre||;);\end{Bmatrix} \\
   | &\ id\ &&\begin{Bmatrix}  expresion.nombre = id.nombre;\\ expresion.true = vacio();\\expresion.false = vacio(); \end{Bmatrix} \\
   | &\ n\_entero\ &&\begin{Bmatrix} expresion.nombre = entero.nombre;\\ expresion.true = vacio();\\expresion.false = vacio(); \end{Bmatrix}\\
   | &\ n\_real \ &&\begin{Bmatrix} expresion.nombre = real.nombre; \\ expresion.true = vacio();\\expresion.false = vacio(); \end{Bmatrix}\\
