@@ -1,0 +1,24 @@
+/*
+	En este fichero se muestran algunos ejemplos de formas erróneas
+    de escribir las expresiones booleanas y, por ello, se producen errores
+    en sus ejecución.
+*/
+
+program bueno_1
+{
+var v_1, v_2: float;
+
+if  or v_1 >= v_2 and not v_1 == v_2 then {
+	println( v_1 );
+};
+
+if not v_1 > and (v_1 >= v_2 or  v_1 == v_2) then {
+	println( v_1 );
+};
+
+if not or v_1 >= v_2 and not v_1 == v_2 then {
+	println( v_1 );
+};
+
+	v_2 = 78;
+};

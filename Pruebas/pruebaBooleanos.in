@@ -11,6 +11,15 @@ var v_1, v_2: float;
 if v_1 > v_2 or v_1 >= v_2 and not v_1 == v_2 then {
 	println( v_1 );
 };
+
+if not v_1 > v_2 and (v_1 >= v_2 or  v_1 == v_2) then {
+	println( v_1 );
+};
+
+if not(v_1 > v_2 or v_1 >= v_2) and not v_1 == v_2 then {
+	println( v_1 );
+};
+
 	v_2 = 78;
 };
 

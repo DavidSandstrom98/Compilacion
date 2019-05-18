@@ -1,0 +1,37 @@
+/*
+    Mediante este ficheor podemos observar algunos ejemplos
+    de bucles for con errores. Es por ello por lo que su ejecución producirá
+    errores
+*/
+
+program bueno_1
+{
+var v_1, v_2: float;
+
+for v_1 from  to 50 * v_2 / 3 + 5 do {
+    println( v_1 );
+};
+
+v_1 = 356;
+
+for v_1 from 100 * 2 * 7 + 3  50 * v_2 / 3 + 5 do {
+	for v_2 from 27 / 3 to 51 / 3 + 5 do {
+		println( v_1 );
+	};
+};
+
+
+v_1 = 356;
+
+for v_2 from 10 * 2 + 3  to  {
+	while(b_123 < 45){
+		v_2 = v_2 +5;
+		
+	};
+
+};
+v_2 = 3;
+
+};
+
+

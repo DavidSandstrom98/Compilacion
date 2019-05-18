@@ -234,6 +234,7 @@ sentencia : variable TASSIG expresion TSEMIC
 				std::vector<int> a;
 				a.push_back($8+2);
 				codigo.completarInstrucciones(a, codigo.obtenRef());
+				//codigo.completarInstrucciones($10, $8);
 				$$=new vector<int>();
 			}
 

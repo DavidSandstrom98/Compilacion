@@ -1,7 +1,7 @@
 /*
 	Este fichero se centra en realizar pruebas sobre el 
 	anidamiento de estructuras, destacando las estructuras:
-		-Do While
+		-Do until
 		-Skip If
 		-If.
 	Como puede comprobarse mediante la ejecución de la aplicación,

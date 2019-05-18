@@ -166,7 +166,7 @@ A mi parecer, teniendo en cuenta la corrección del apartado de traducción de e
 \multicolumn{1}{|c|}{TWHILE}   & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Es una palabra reservada que se compone por los caracteres\\ w h i l e\end{tabular}}     & \multicolumn{1}{c|}{"while"}   & while   \\ \hline
 TFOR         & \begin{tabular}[c]{@{}c@{}}Es una palabra reservada que se compone por los caracteres\\ f o r\end{tabular}         & "for"     & for     \\ \hline
 \multicolumn{1}{|c|}{TDO}      & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Es una palabra reservada que se compone por los caracteres\\ d o\end{tabular}}           & \multicolumn{1}{c|}{"do"}      & do      \\ \hline
-\multicolumn{1}{|c|}{TUNTIL}   & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Es una palabra reservada que se compone por los caracteres\\ u n t i l\end{tabular}}     & \multicolumn{1}{c|}{"unHl"}    & unHl    \\ \hline
+\multicolumn{1}{|c|}{TUNTIL}   & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Es una palabra reservada que se compone por los caracteres\\ u n t i l\end{tabular}}     & \multicolumn{1}{c|}{"until"}    & until    \\ \hline
 \multicolumn{1}{|c|}{TELSE}    & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Es una palabra reservada que se compone por los caracteres\\ e l s e\end{tabular}}       & \multicolumn{1}{c|}{"else"}    & else    \\ \hline
 \multicolumn{1}{|c|}{TSKIP}    & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Es una palabra reservada que se compone por los caracteres\\ s k i p\end{tabular}}       & \multicolumn{1}{c|}{"skip"}    & skip    \\ \hline
 \multicolumn{1}{|c|}{TREAD}    & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Es una palabra reservada que se compone por los caracteres\\ r e a d\end{tabular}}       & \multicolumn{1}{c|}{"read"}    & read    \\ \hline
@@ -420,20 +420,20 @@ A la sentencia Skip If dentro del do-until-else le hemos dotado del siguiente si
 
 \begin{alignat*}{2}
   \text{\textbf{sentencia}} \to\ & variable = expresion;\ \begin{Bmatrix} anadir\_inst(variable.nombre||:=||expresion.nombre;);\\ sentencia.skip=lista\_vacia();\end{Bmatrix}\\
- |\ &if\ expresion\ then\ \{M\ lista\_de\_sentencias\}M; \begin{Bmatrix} completar(expresion.true,M_1.ref); \\ completar(expresion.false,M_2.ref);\\ sentencia.skip=lista\_de\_sentencias.skip \end{Bmatrix} \\
- |\ &while\ M\ expresion \{M\ lista\_de\_sentencias M\}; \begin{Bmatrix} completar(expresion.true,M_2.ref); \\ completar(expresion.false,M_3.ref+1);\\ anadir\_inst(goto||M_1.ref);\\completar(lista\_sentencias.skip,M_1.ref);\\sentencia.skip:=lista\_vacia(); \end{Bmatrix} \\
- |\ &do\ M\ \{\ lista\_de\_sentencias \}\ until\ M\ expresion\ else\ M\ \{\ lista\_de\_sentencias\}\ ;\ \begin{Bmatrix} completar(expresion.true,M_1.ref); \\ completar(expresion.false,M_3.ref);\\ completar(lista\_sentencias_1.skip,M_2.ref);\\sentencia.skip:=lista\_vacia(); \end{Bmatrix} \\
- |\ &skip\ if\ expresion\ M;\ \begin{Bmatrix} completar(expresion.false,M.ref); \\ sentencia.skip =expresion.true; \end{Bmatrix}\\
- |\ &read\ (variable);\ \begin{Bmatrix} anadir\_inst(read||variable.nombre||;);\\ sentencia.skip=lista\_vacia();\end{Bmatrix}\\
- |\ &println \ (expresion);\  \begin{Bmatrix} anadir\_inst(write||expresion.nombre||;); \\ anadir\_inst(writeln;); \\ sentencia.skip=lista\_vacia(); \end{Bmatrix}\\
+ |\ &\text{\textbf{if}}\ expresion\ \text{\textbf{then}}\ \{M\ lista\_de\_sentencias\}M; \begin{Bmatrix} completar(expresion.true,M_1.ref); \\ completar(expresion.false,M_2.ref);\\ sentencia.skip=lista\_de\_sentencias.skip \end{Bmatrix} \\
+ |\ &\text{\textbf{while}}\ M\ expresion \{M\ lista\_de\_sentencias M\}; \begin{Bmatrix} completar(expresion.true,M_2.ref); \\ completar(expresion.false,M_3.ref+1);\\ anadir\_inst(goto||M_1.ref);\\completar(lista\_sentencias.skip,M_1.ref);\\sentencia.skip:=lista\_vacia(); \end{Bmatrix} \\
+ |\ &\text{\textbf{do}}\ M\ \{\ lista\_de\_sentencias \}\ \text{\textbf{until}}\ M\ expresion\ \text{\textbf{else}}\ M\ \{\ lista\_de\_sentencias\}\ ;\ \begin{Bmatrix} completar(expresion.true,M_1.ref); \\ completar(expresion.false,M_3.ref);\\ completar(lista\_sentencias_1.skip,M_2.ref);\\sentencia.skip:=lista\_vacia(); \end{Bmatrix} \\
+ |\ &\text{\textbf{skip if}}\ expresion\ M;\ \begin{Bmatrix} completar(expresion.false,M.ref); \\ sentencia.skip =expresion.true; \end{Bmatrix}\\
+ |\ &\text{\textbf{read }}(variable);\ \begin{Bmatrix} anadir\_inst(read||variable.nombre||;);\\ sentencia.skip=lista\_vacia();\end{Bmatrix}\\
+ |\ &\text{\textbf{println }}(expresion);\  \begin{Bmatrix} anadir\_inst(write||expresion.nombre||;); \\ anadir\_inst(writeln;); \\ sentencia.skip=lista\_vacia(); \end{Bmatrix}\\
 \end{alignat*}
 
-\begin{center}
+
   \begin{alignat*}{2}
      \text{\textbf{variable}} \to\ & id\ \{variable.nombre = id.nombre;\} \\\\
      \text{\textbf{M}} \to\ &\xi\ \{M.ref=obtenref();\}
   \end{alignat*}
-\end{center}
+
 
 \begin{center}
   \begin{alignat*}{2}
@@ -474,17 +474,188 @@ Contienen código con errores de forma que se pueda probar el comportamiento de 
 
 \section{Objetivos extra añadidos.}
 \subsection{Tratamiento de expresiones booleanas.}
+\subsubsection{Fragmento añadido a la gramática}
+\begin{flalign*}
+    \text{\textbf{expresion}} \to &\text{ expresion \textbf{or} expresion} &\\
+                 |&\text{ expresion \textbf{and} expresion}\\
+                 |&\text{ \textbf{not} expresion}
+\end{flalign*}
+\subsubsection{Gramática resultante}
+\begin{flalign*}
+    programa \to &  \text{ \textbf{program id}} &\\
+                & bloque;\\
+\end{flalign*}
+\begin{flalign*}
+    bloque \to & \text{ \{ declaraciones}&\\
+                & \text{\ \ \ \ decl\_de\_subprogs}\\
+                &\text {\ \ \ \ lista\_de\_sentencias }\\
+                &\text{\ \}}\\
+\end{flalign*}
+\begin{flalign*}
+    delcaraciones \to & \text{ \textbf{var} lista\_de\_ident : tipo ; declaraciones}&\\
+                |\ &\xi\\
+\end{flalign*}
+\begin{flalign*}
+    lista\_de\_ident \to & \text{ \textbf{id} resto\_lista\_id}&\\
+\end{flalign*}
+\begin{flalign*}
+    resto\_lista\_id \to & \text{ \textbf{, id} resto\_lista\_id}&\\
+            |\ &\xi\\
+\end{flalign*}
+\begin{flalign*}
+    tipo \to & \text{ \textbf{integer} } |\text{ \textbf{float}}&\\
+\end{flalign*}
+\begin{flalign*}
+    decl\_de\_subprogs \to &\text{ decl\_de\_subprograma decl\_de\_subprogs}&\\
+        | & \ \xi
+\end{flalign*}
+\begin{flalign*}
+        decl\_de\_subprograma \to & \text{ \textbf{procedure id} argumentos}&\\
+                        &   \text{bloque;}\\
+\end{flalign*}
+\begin{flalign*}
+    argumentos \to & \text{ (lista\_de\_param)}&\\
+                |\ &\xi\\
+\end{flalign*}
+\begin{flalign*}
+    lista\_de\_param \to & \text{ lista\_de\_ident : clase\_par tipo resto\_lis\_de\_param}&\\
+\end{flalign*}
+\begin{flalign*}
+    clase\_par \to & \text{ \textbf{in} } | \text{ \textbf{out} } | \text{ \textbf{in out}}&\\
+\end{flalign*}
+\begin{flalign*}       
+        resto\_lis\_de\_param \to &\text{ ; lista\_de\_ident : clase\_par tipo resto\_lis\_de\_param}&\\  
+         |\ &\xi\\
+\end{flalign*}
+\begin{flalign*}
+         lista\_de\_sentencias \to & \text{ sentencia lista\_de\_sentencias}&\\
+          |\ &\xi\\
+\end{flalign*}
+\begin{flalign*}
+sentencia \to & \text{ variable = expresion ;}&\\
+          |&\text{ \textbf{if} expresion \textbf{then} \{ lista\_de\_sentencias \};}\\
+          |&\text{ \textbf{while} expresion  \{ lista\_de\_sentencias \};}\\
+          |&\text{ \textbf{do} \{ lista\_de\_sentencias \} \textbf{until} expresion \textbf{else} \{ lista\_de\_sentencias \};}\\
+          |&\text{ \textbf{skip} \textbf{if} expresion ;}\\
+          |&\text{ \textbf{read} ( variable ) ;}\\
+          |&\text{ \textbf{println} ( expresion ) ;}\\\\
+         variable \to &\ id
+\end{flalign*}
+
+\begin{flalign*}
+    expresion \to  &\text{ expresion \textbf{or} expresion} &\\
+    |&\text{ expresion \textbf{and} expresion}\\
+    |&\text{ \textbf{not} expresion}\\
+    |&\text{ expresion $==$ expresion}\\
+    |&\text{ expresion $>$ expresion}\\
+    |&\text{ expresion $<$ expresion}\\
+    |&\text{ expresion $>=$ expresion}\\
+    |&\text{ expresion $<=$ expresion}\\
+    |&\text{ expresion $/=$ expresion}\\
+    |&\text{ expresion $+$ expresion}\\
+    |&\text{ expresion $-$ expresion}\\
+    |&\text{ expresion $*$ expresion}\\
+    |&\text{ expresion $/$ expresion}\\
+    |&\text{ \textbf{id}}\\
+    |&\text{ \textbf{num\_entero}}\\
+    |&\text{\textbf{ num\_real}}\\
+    |&\text{ ( expresion )}
+\end{flalign*}
+
+
 \subsubsection{Fragmento añadido al ETDS}
 Partiendo del ETDS previamente expuesto, ha sido necesario realizar el siguiente añadido al mismo con el fin de poder procesar las expresiones booleanas:
 \begin{center}
      \begin{alignat*}{2}
-     \text{  \textbf{expresion}} \to\ &  expresion\ or && M\ expresion \begin{Bmatrix} completar(expresion_1, M.ref);\\ expresion.true=unir(expresion_1.true, expresion_2.true); \\  expresion.false=expresion_2.false;\end{Bmatrix} \\
-      |\ & expresion\ and\ && M\ expresion  \begin{Bmatrix} completar(expresion_1, M.ref);\\ expresion.true=expresion_2.true; \\  expresion.false=unir(expresion_1.false, expresion_2.false);\end{Bmatrix}\\
-      |\ & not\ expresion && \begin{Bmatrix} expresion.true=expresion_1.false; \\  expresion.false=expresion_1.true;\end{Bmatrix}
+     \text{  \textbf{expresion}} \to\ &  expresion\ \textbf{or} && M\ expresion \begin{Bmatrix} completar(expresion_1, M.ref);\\ expresion.true=unir(expresion_1.true, expresion_2.true); \\  expresion.false=expresion_2.false;\end{Bmatrix} \\
+      |\ & expresion\ \textbf{and}\ && M\ expresion  \begin{Bmatrix} completar(expresion_1, M.ref);\\ expresion.true=expresion_2.true; \\  expresion.false=unir(expresion_1.false, expresion_2.false);\end{Bmatrix}\\
+      |\ & \textbf{not}\ expresion && \begin{Bmatrix} expresion.true=expresion_1.false; \\  expresion.false=expresion_1.true;\end{Bmatrix}
       \end{alignat*}
 \end{center}
+
 \subsubsection{ETDS resultante}
-Una vez expuesto el fragmento nuevo añadido al ETDS básico de la práctica, el ETDS resultante es el siguiente: 
+Una vez expuesto el fragmento nuevo añadido al ETDS básico de la práctica, el ETDS resultante es el siguiente:
+
+\begin{center}
+  \begin{align*}
+    \text{\textbf{programa}} \to\ & program\ id\ \{ anadir\_inst( prog|| id.nombre || ;); \}\\
+    & bloque\  ;\  \{ anadir\_inst(halt; ); escribir();\}\\\\
+    \text{\textbf{ bloque}} \to\ &\{ declaraciones\ decl\_de\_subprogs\ lista\_de\_sentencias \}\\\\
+    \text{\textbf{declaraciones}} \to\ & var\ lista\_de\_ident\ :\ tipo;\ \{ anadir\_declaracion(lista\_de\_ident.lnom,\ tipo.clase);\}\ declaraciones\\
+    |\ &\xi\\\\
+    \text{\textbf{lista\_de\_ident}} \to\ & id\ resto\_lista\_id\ \{lista\_de\_ident.lnom=anadir(resto\_lista\_id.lnom,\ id.nombre);\}\\\\
+    \text{\textbf{ resto\_lista\_id}} \to\ & ,id\ resto\_lista\_id\  \{resto\_lista\_id.lnom=anadir(resto\_lista\_id_1.lnom,\ id.nombre);\} \\
+    |\ &\xi\ \{resto\_lista\_id.lnom=lista\_vacia();\}\\\\
+     \text{\textbf{tipo}} \to\ & integer\ \{tipo.clase="int"; \}\\
+    |\ & float\ \{tipo.clase="real"; \}\\\\
+  \end{align*}
+\end{center}
+
+\begin{center}
+  \begin{alignat*}{2}
+     \text{\textbf{decl\_de\_subprogs}} \to\ &decl\_de\_subprograma\ decl\_de\_subprogs\\
+    |\ &\xi\\\\
+     \text{\textbf{decl\_de\_subprograma}} \to\ &procedure\ id\ \{anadir\_inst( proc|| id.nombre || ;); \}\ argumentos\ bloque ; \{anadir\_inst(endproc;); \}\\\\
+     \text{\textbf{argumentos}} \to\ & ( lista\_de\_param )\\
+    |\ &\xi\\\\
+     \text{\textbf{lista\_de\_param}} \to\ & lista\_de\_ident\ :\ clase\_par\ tipo\ \{ anadir\_declaracion(lista\_de\_ident.lnom, clase\_par.tipo||\_||tipo.clase);\}\\
+    &resto\_lis\_de\_param\\\\
+    \text{\textbf{clase\_par}} \to\ &in\ \{ clase\_par.tipo = "val";\}\\ 
+    |\ &out  \{ clase\_par.tipo = "ref";\}\\
+    |\ &in\ out\ \{ clase\_par.tipo = "ref";\}\\\\
+     \text{\textbf{resto\_lis\_de\_param}} \to\ &;\ lista\_de\_ident\ :\ clase\_par\ tipo\ \{ anadir\_declaracion(lista\_de\_ident.lnom, clase\_par.tipo||\_||tipo.clase);\}\\
+    &resto\_lis\_de\_param\\
+    |\ &\xi\\\\
+     \text{\textbf{lista\_de\_sentencias}} \to\ & sentencia\ lista\_de\_sentencias \begin{Bmatrix} lista\_de\_sentencias.skip=unir(sentencia.skip, lista\_de\_sentencias_1.skip); \end{Bmatrix} \\
+    |\ &\xi\ \{lista\_de\_sentencias.skip=lista\_vacia();\}\\ 
+  \end{alignat*}
+\end{center}
+
+
+\begin{alignat*}{2}
+  \text{\textbf{sentencia}} \to\ & variable = expresion;\ \begin{Bmatrix} anadir\_inst(variable.nombre||:=||expresion.nombre;);\\ sentencia.skip=lista\_vacia();\end{Bmatrix}\\
+ |\ &\textbf{if}\ expresion\ \textbf{then}\ \{M\ lista\_de\_sentencias\}M; \begin{Bmatrix} completar(expresion.true,M_1.ref); \\ completar(expresion.false,M_2.ref);\\ sentencia.skip=lista\_de\_sentencias.skip \end{Bmatrix} \\
+ |\ &\textbf{while}\ M\ expresion \{M\ lista\_de\_sentencias M\}; \begin{Bmatrix} completar(expresion.true,M_2.ref); \\ completar(expresion.false,M_3.ref+1);\\ anadir\_inst(goto||M_1.ref);\\completar(lista\_sentencias.skip,M_1.ref);\\sentencia.skip:=lista\_vacia(); \end{Bmatrix} \\
+ |\ &\textbf{do}\ M\ \{\ lista\_de\_sentencias \}\ \textbf{until}\ M\ expresion\ \textbf{else}\ M\ \{\ lista\_de\_sentencias\}\ ;\ \begin{Bmatrix} completar(expresion.true,M_1.ref); \\ completar(expresion.false,M_3.ref);\\ completar(lista\_sentencias_1.skip,M_2.ref);\\sentencia.skip:=lista\_vacia(); \end{Bmatrix} \\
+ |\ &\textbf{skip}\ \textbf{if}\ expresion\ M;\ \begin{Bmatrix} completar(expresion.false,M.ref); \\ sentencia.skip =expresion.true; \end{Bmatrix}\\
+ |\ &\textbf{read}\ (variable);\ \begin{Bmatrix} anadir\_inst(read||variable.nombre||;);\\ sentencia.skip=lista\_vacia();\end{Bmatrix}\\
+ |\ &\textbf{println} \ (expresion);\  \begin{Bmatrix} anadir\_inst(write||expresion.nombre||;); \\ anadir\_inst(writeln;); \\ sentencia.skip=lista\_vacia(); \end{Bmatrix}\\
+\end{alignat*}
+
+
+  \begin{alignat*}{2}
+     \text{\textbf{variable}} \to\ & id\ \{variable.nombre = id.nombre;\} \\\\
+     \text{\textbf{M}} \to\ &\xi\ \{M.ref=obtenref();\}
+  \end{alignat*}
+
+
+\begin{center}
+  \begin{alignat*}{2}
+     \text{\textbf{expresion}} \to\ &  expresion\ \textbf{or} && M\ expresion \begin{Bmatrix} completar(expresion_1, M.ref);\\ expresion.true=unir(expresion_1.true, expresion_2.true); \\  expresion.false=expresion_2.false;\end{Bmatrix} \\
+      |\ & expresion\ \textbf{and}\ && M\ expresion  \begin{Bmatrix} completar(expresion_1, M.ref);\\ expresion.true=expresion_2.true; \\  expresion.false=unir(expresion_1.false, expresion_2.false);\end{Bmatrix}\\
+      |\ & \textbf{not}\ expresion && \begin{Bmatrix} expresion.true=expresion_1.false; \\  expresion.false=expresion_1.true;\end{Bmatrix}\\
+     |\ & expresion == && expresion \begin{Bmatrix} expresion.nombre = vacio();\\ expresion.true=inilista(obtenref()); \\  expresion.false=inilista(obtenref()+1);\\ anadir\_inst(if||expresion_1.nombre||==||expresion_2.nombre||goto);\\ anadir\_inst(goto);\end{Bmatrix} \\
+    |\ & expresion > && expresion                \begin{Bmatrix} expresion.nombre = vacio();\\ expresion.true=inilista(obtenref()); \\  expresion.false=inilista(obtenref()+1);\\ anadir\_inst(if||expresion_1.nombre||>||expresion_2.nombre||goto);\\ anadir\_inst(goto);\end{Bmatrix} \\
+    |\ & expresion < && expresion                   \begin{Bmatrix} expresion.nombre = vacio();\\ expresion.true=inilista(obtenref()); \\  expresion.false=inilista(obtenref()+1);\\ anadir\_inst(if||expresion_1.nombre||<||expresion_2.nombre||goto);\\ anadir\_inst(goto);\end{Bmatrix} \\
+  \end{alignat*}
+  \begin{alignat*}{2}
+    |\ & expresion \geq && expresion                \begin{Bmatrix} expresion.nombre = vacio();\\ expresion.true=inilista(obtenref()); \\  expresion.false=inilista(obtenref()+1);\\ anadir\_inst(if||expresion_1.nombre||\geq||expresion_2.nombre||goto);\\ anadir\_inst(goto);\end{Bmatrix} \\
+    |\ & expresion\ \leq\ && expresion \begin{Bmatrix} expresion.nombre = vacio();\\ expresion.true=inilista(obtenref()); \\  expresion.false=inilista(obtenref()+1);\\ anadir\_inst(if||expresion_1.nombre||\leq||expresion_2.nombre||goto);\\ anadir\_inst(goto);\end{Bmatrix} \\
+    |\ & expresion\ \neq\ && expresion \begin{Bmatrix} expresion.nombre = vacio();\\ expresion.true=inilista(obtenref()); \\  expresion.false=inilista(obtenref()+1);\\ anadir\_inst(if||expresion_1.nombre||\neq||expresion_2.nombre||goto);\\ anadir\_inst(goto);\end{Bmatrix} \\
+    |\ &  expresion\ + && expresion \begin{Bmatrix} expresion.nombre = nuevo\_id();\\ expresion.true = vacio();\\ expresion.false = vacio(); \\  anadir\_inst(expresion.nombre||:=||expresion_1.nombre||+||expresion_2.nombre||;);\end{Bmatrix} \\
+  \end{alignat*}
+
+  \begin{alignat*}{2}
+  |\ & expresion\ - && expresion \begin{Bmatrix} expresion.nombre = nuevo\_id();\\ expresion.true = vacio();\\ expresion.false = vacio(); \\ anadir\_inst(expresion.nombre||:=||expresion_1.nombre||-||expresion_2.nombre||;);\end{Bmatrix} \\
+  |\ & expresion\ * && expresion \begin{Bmatrix} expresion.nombre = nuevo\_id();\\ expresion.true = vacio();\\ expresion.false = vacio(); \\  anadir\_inst(expresion.nombre||:=||expresion_1.nombre||*||expresion_2.nombre||;);\end{Bmatrix} \\
+  |\ & expresion\ / && expresion \begin{Bmatrix} expresion.nombre = nuevo\_id();\\ expresion.true = vacio();\\ expresion.false = vacio(); \\  anadir\_inst(expresion.nombre||:=||expresion_1.nombre||/||expresion_2.nombre||;);\end{Bmatrix} \\\\
+  | &\ id\ &&\begin{Bmatrix}  expresion.nombre = id.nombre;\\ expresion.true = vacio();\\expresion.false = vacio(); \end{Bmatrix} \\
+  | &\ n\_entero\ &&\begin{Bmatrix} expresion.nombre = entero.nombre;\\ expresion.true = vacio();\\expresion.false = vacio(); \end{Bmatrix}\\
+  | &\ n\_real \ &&\begin{Bmatrix} expresion.nombre = real.nombre; \\ expresion.true = vacio();\\expresion.false = vacio(); \end{Bmatrix}\\
+  | &\ (expresion)\ && \begin{Bmatrix} expresion.nombre = expresion_1.nombre;\\ expresion.true = expresion_1.true;\\ expresion.false = expresion_1.false;\end{Bmatrix}\\
+ \end{alignat*}
+\end{center}
+
 \subsubsection{Casos de prueba}
 Los casos de prueba para comprobar el correcto funcionamiento de la implementación de la traducción de expresiones booleanas puede encontrarse en dos ficheros:
 \begin{enumerate}
@@ -492,16 +663,189 @@ Los casos de prueba para comprobar el correcto funcionamiento de la implementaci
 \item \textbf{pruebaBooleanosMala.in}: este fichero contiene pruebas con fallos para asegurar que la implementación realizada los detecta.
 \end{enumerate}
 
+
 \subsection{Estructura de control for}
 
+\subsubsection{Fragmento añadido a la gramática}
+\begin{flalign*}
+    \text{ \textbf{sentencia}} \to & \text{ \textbf{for} id \textbf{from} expresion \textbf{to} expresion \textbf{do} \{ lista\_de\_sentencias \}};&
+\end{flalign*}
+
+
+\subsubsection{Gramática resultante}
+\begin{flalign*}
+    programa \to &  \text{ \textbf{program id}} &\\
+                & bloque;\\
+\end{flalign*}
+\begin{flalign*}
+    bloque \to & \text{ \{ declaraciones}&\\
+                & \text{\ \ \ \ decl\_de\_subprogs}\\
+                &\text {\ \ \ \ lista\_de\_sentencias }\\
+                &\text{\ \}}\\
+\end{flalign*}
+\begin{flalign*}
+    delcaraciones \to & \text{ \textbf{var} lista\_de\_ident : tipo ; declaraciones}&\\
+                |\ &\xi\\
+\end{flalign*}
+\begin{flalign*}
+    lista\_de\_ident \to & \text{ \textbf{id} resto\_lista\_id}&\\
+\end{flalign*}
+\begin{flalign*}
+    resto\_lista\_id \to & \text{ \textbf{, id} resto\_lista\_id}&\\
+            |\ &\xi\\
+\end{flalign*}
+\begin{flalign*}
+    tipo \to & \text{ \textbf{integer} } |\text{ \textbf{float}}&\\
+\end{flalign*}
+\begin{flalign*}
+    decl\_de\_subprogs \to &\text{ decl\_de\_subprograma decl\_de\_subprogs}&\\
+        | & \ \xi
+\end{flalign*}
+\begin{flalign*}
+        decl\_de\_subprograma \to & \text{ \textbf{procedure id} argumentos}&\\
+                        &   \text{bloque;}\\
+\end{flalign*}
+\begin{flalign*}
+    argumentos \to & \text{ (lista\_de\_param)}&\\
+                |\ &\xi\\
+\end{flalign*}
+\begin{flalign*}
+    lista\_de\_param \to & \text{ lista\_de\_ident : clase\_par tipo resto\_lis\_de\_param}&\\
+\end{flalign*}
+\begin{flalign*}
+    clase\_par \to & \text{ \textbf{in} } | \text{ \textbf{out} } | \text{ \textbf{in out}}&\\
+\end{flalign*}
+\begin{flalign*}       
+        resto\_lis\_de\_param \to &\text{ ; lista\_de\_ident : clase\_par tipo resto\_lis\_de\_param}&\\  
+         |\ &\xi\\
+\end{flalign*}
+\begin{flalign*}
+         lista\_de\_sentencias \to & \text{ sentencia lista\_de\_sentencias}&\\
+          |\ &\xi\\
+\end{flalign*}
+\begin{flalign*}
+sentencia \to & \text{ variable = expresion ;}&\\
+          |&\text{ \textbf{if} expresion \textbf{then} \{ lista\_de\_sentencias \};}\\
+          |&\text{ \textbf{for} id \textbf{from} expresion \textbf{to} expresion \textbf{do} \{ lista\_de\_sentencias \}};\\
+          |&\text{ \textbf{while} expresion  \{ lista\_de\_sentencias \};}\\
+          |&\text{ \textbf{do} \{ lista\_de\_sentencias \} \textbf{until} expresion \textbf{else} \{ lista\_de\_sentencias \};}\\
+          |&\text{ \textbf{skip} \textbf{if} expresion ;}\\
+          |&\text{ \textbf{read} ( variable ) ;}\\
+          |&\text{ \textbf{println} ( expresion ) ;}\\\\
+         variable \to &\ id
+\end{flalign*}
+
+\begin{flalign*}
+    expresion \to  &\text{ expresion \textbf{or} expresion} &\\
+    |&\text{ expresion \textbf{and} expresion}\\
+    |&\text{ \textbf{not} expresion}\\
+    |&\text{ expresion $==$ expresion}\\
+    |&\text{ expresion $>$ expresion}\\
+    |&\text{ expresion $<$ expresion}\\
+    |&\text{ expresion $>=$ expresion}\\
+    |&\text{ expresion $<=$ expresion}\\
+    |&\text{ expresion $/=$ expresion}\\
+    |&\text{ expresion $+$ expresion}\\
+    |&\text{ expresion $-$ expresion}\\
+    |&\text{ expresion $*$ expresion}\\
+    |&\text{ expresion $/$ expresion}\\
+    |&\text{ \textbf{id}}\\
+    |&\text{ \textbf{num\_entero}}\\
+    |&\text{\textbf{ num\_real}}\\
+    |&\text{ ( expresion )}
+\end{flalign*}
+
+
 \subsubsection{Fragmento añadido al ETDS}
-\begin{center}
-     \begin{alignat*}{2}
-      \text{ \textbf{sentencia}} \to & \text{ for id from expresion to expresion do M \{}\begin{Bmatrix} anadir\_inst(id.nombre||:=||expresion_1.nombre);\\ anadir\_inst(if||:=||id.nombre||>||expresion_2.nombre||goto);\end{Bmatrix} \\
+\begin{alignat*}{2}
+      \text{ \textbf{sentencia}} \to & \text{ \textbf{for} id \textbf{from} expresion \textbf{to} expresion \textbf{do} M \{}\begin{Bmatrix} anadir\_inst(id.nombre||:=||expresion_1.nombre);\\ anadir\_inst(if||:=||id.nombre||>||expresion_2.nombre||goto);\end{Bmatrix} \\
      & lista\_de\_sentencias\ \}; \begin{Bmatrix} anadir\_inst(id.nombre||:=||id.nombre|| +1);\\ anadir\_inst(goto||M.ref +2||;);\\ completar(obtenref(), M.ref+2);\end{Bmatrix} 
       \end{alignat*}
-\end{center}
 \subsubsection{ETDS resultante}
+
+
+\begin{center}
+  \begin{align*}
+    \text{\textbf{programa}} \to\ & program\ id\ \{ anadir\_inst( prog|| id.nombre || ;); \}\\
+    & bloque\  ;\  \{ anadir\_inst(halt; ); escribir();\}\\\\
+    \text{\textbf{ bloque}} \to\ &\{ declaraciones\ decl\_de\_subprogs\ lista\_de\_sentencias \}\\\\
+    \text{\textbf{declaraciones}} \to\ & var\ lista\_de\_ident\ :\ tipo;\ \{ anadir\_declaracion(lista\_de\_ident.lnom,\ tipo.clase);\}\ declaraciones\\
+    |\ &\xi\\\\
+    \text{\textbf{lista\_de\_ident}} \to\ & id\ resto\_lista\_id\ \{lista\_de\_ident.lnom=anadir(resto\_lista\_id.lnom,\ id.nombre);\}\\\\
+    \text{\textbf{ resto\_lista\_id}} \to\ & ,id\ resto\_lista\_id\  \{resto\_lista\_id.lnom=anadir(resto\_lista\_id_1.lnom,\ id.nombre);\} \\
+    |\ &\xi\ \{resto\_lista\_id.lnom=lista\_vacia();\}\\\\
+     \text{\textbf{tipo}} \to\ & integer\ \{tipo.clase="int"; \}\\
+    |\ & float\ \{tipo.clase="real"; \}\\\\
+  \end{align*}
+\end{center}
+
+\begin{center}
+  \begin{alignat*}{2}
+     \text{\textbf{decl\_de\_subprogs}} \to\ &decl\_de\_subprograma\ decl\_de\_subprogs\\
+    |\ &\xi\\\\
+     \text{\textbf{decl\_de\_subprograma}} \to\ &procedure\ id\ \{anadir\_inst( proc|| id.nombre || ;); \}\ argumentos\ bloque ; \{anadir\_inst(endproc;); \}\\\\
+     \text{\textbf{argumentos}} \to\ & ( lista\_de\_param )\\
+    |\ &\xi\\\\
+     \text{\textbf{lista\_de\_param}} \to\ & lista\_de\_ident\ :\ clase\_par\ tipo\ \{ anadir\_declaracion(lista\_de\_ident.lnom, clase\_par.tipo||\_||tipo.clase);\}\\
+    &resto\_lis\_de\_param\\\\
+    \text{\textbf{clase\_par}} \to\ &in\ \{ clase\_par.tipo = "val";\}\\ 
+    |\ &out  \{ clase\_par.tipo = "ref";\}\\
+    |\ &in\ out\ \{ clase\_par.tipo = "ref";\}\\\\
+     \text{\textbf{resto\_lis\_de\_param}} \to\ &;\ lista\_de\_ident\ :\ clase\_par\ tipo\ \{ anadir\_declaracion(lista\_de\_ident.lnom, clase\_par.tipo||\_||tipo.clase);\}\\
+    &resto\_lis\_de\_param\\
+    |\ &\xi\\\\
+     \text{\textbf{lista\_de\_sentencias}} \to\ & sentencia\ lista\_de\_sentencias \begin{Bmatrix} lista\_de\_sentencias.skip=unir(sentencia.skip, lista\_de\_sentencias_1.skip); \end{Bmatrix} \\
+    |\ &\xi\ \{lista\_de\_sentencias.skip=lista\_vacia();\}\\ 
+  \end{alignat*}
+\end{center}
+
+
+\begin{alignat*}{2}
+  \text{\textbf{sentencia}} \to\ & variable = expresion;\ \begin{Bmatrix} anadir\_inst(variable.nombre||:=||expresion.nombre;);\\ sentencia.skip=lista\_vacia();\end{Bmatrix}\\
+ |&\ \textbf{if}\ expresion\ \textbf{then}\ \{M\ lista\_de\_sentencias\}M; \begin{Bmatrix} completar(expresion.true,M_1.ref); \\ completar(expresion.false,M_2.ref);\\ sentencia.skip=lista\_de\_sentencias.skip \end{Bmatrix} \\
+ |&\text{ \textbf{for} id \textbf{from} expresion \textbf{to} expresion \textbf{do} M \{}\begin{Bmatrix} anadir\_inst(id.nombre||:=||expresion_1.nombre);\\ anadir\_inst(if||:=||id.nombre||>||expresion_2.nombre||goto);\end{Bmatrix} \\
+     &\ \ \ \ \ \  lista\_de\_sentencias\ \}; \begin{Bmatrix} anadir\_inst(id.nombre||:=||id.nombre|| +1);\\ anadir\_inst(goto||M.ref +2||;);\\ completar(obtenref(), M.ref+2);\end{Bmatrix}\\ 
+ |\ &\textbf{while}\ M\ expresion \{M\ lista\_de\_sentencias M\}; \begin{Bmatrix} completar(expresion.true,M_2.ref); \\ completar(expresion.false,M_3.ref+1);\\ anadir\_inst(goto||M_1.ref);\\completar(lista\_sentencias.skip,M_1.ref);\\sentencia.skip:=lista\_vacia(); \end{Bmatrix} \\
+ |\ &\textbf{do}\ M\ \{\ lista\_de\_sentencias \}\ \textbf{until}\ M\ expresion\ \textbf{else}\ M\ \{\ lista\_de\_sentencias\}\ ;\ \begin{Bmatrix} completar(expresion.true,M_1.ref); \\ completar(expresion.false,M_3.ref);\\ completar(lista\_sentencias_1.skip,M_2.ref);\\sentencia.skip:=lista\_vacia(); \end{Bmatrix} \\
+ |\ &\textbf{skip}\ \textbf{if}\ expresion\ M;\ \begin{Bmatrix} completar(expresion.false,M.ref); \\ sentencia.skip =expresion.true; \end{Bmatrix}\\
+ |\ &\textbf{read}\ (variable);\ \begin{Bmatrix} anadir\_inst(read||variable.nombre||;);\\ sentencia.skip=lista\_vacia();\end{Bmatrix}\\
+ |\ &\textbf{println} \ (expresion);\  \begin{Bmatrix} anadir\_inst(write||expresion.nombre||;); \\ anadir\_inst(writeln;); \\ sentencia.skip=lista\_vacia(); \end{Bmatrix}\\
+\end{alignat*}
+
+
+  \begin{alignat*}{2}
+     \text{\textbf{variable}} \to\ & id\ \{variable.nombre = id.nombre;\} \\\\
+     \text{\textbf{M}} \to\ &\xi\ \{M.ref=obtenref();\}
+  \end{alignat*}
+
+
+\begin{center}
+  \begin{alignat*}{2}
+     \text{\textbf{expresion}} \to\ &  expresion\ \textbf{or} && M\ expresion \begin{Bmatrix} completar(expresion_1, M.ref);\\ expresion.true=unir(expresion_1.true, expresion_2.true); \\  expresion.false=expresion_2.false;\end{Bmatrix} \\
+      |\ & expresion\ \textbf{and}\ && M\ expresion  \begin{Bmatrix} completar(expresion_1, M.ref);\\ expresion.true=expresion_2.true; \\  expresion.false=unir(expresion_1.false, expresion_2.false);\end{Bmatrix}\\
+      |\ & \textbf{not}\ expresion && \begin{Bmatrix} expresion.true=expresion_1.false; \\  expresion.false=expresion_1.true;\end{Bmatrix}\\
+     |\ & expresion == && expresion \begin{Bmatrix} expresion.nombre = vacio();\\ expresion.true=inilista(obtenref()); \\  expresion.false=inilista(obtenref()+1);\\ anadir\_inst(if||expresion_1.nombre||==||expresion_2.nombre||goto);\\ anadir\_inst(goto);\end{Bmatrix} \\
+    |\ & expresion > && expresion  \begin{Bmatrix} expresion.nombre = vacio();\\ expresion.true=inilista(obtenref()); \\  expresion.false=inilista(obtenref()+1);\\ anadir\_inst(if||expresion_1.nombre||>||expresion_2.nombre||goto);\\ anadir\_inst(goto);\end{Bmatrix} \\
+    |\ & expresion < && expresion  \begin{Bmatrix} expresion.nombre = vacio();\\ expresion.true=inilista(obtenref()); \\  expresion.false=inilista(obtenref()+1);\\ anadir\_inst(if||expresion_1.nombre||<||expresion_2.nombre||goto);\\ anadir\_inst(goto);\end{Bmatrix} \\
+  \end{alignat*}
+  \begin{alignat*}{2}
+    |\ & expresion \geq && expresion \begin{Bmatrix} expresion.nombre = vacio();\\ expresion.true=inilista(obtenref()); \\  expresion.false=inilista(obtenref()+1);\\ anadir\_inst(if||expresion_1.nombre||\geq||expresion_2.nombre||goto);\\ anadir\_inst(goto);\end{Bmatrix} \\
+    |\ & expresion\ \leq\ && expresion \begin{Bmatrix} expresion.nombre = vacio();\\ expresion.true=inilista(obtenref()); \\  expresion.false=inilista(obtenref()+1);\\ anadir\_inst(if||expresion_1.nombre||\leq||expresion_2.nombre||goto);\\ anadir\_inst(goto);\end{Bmatrix} \\
+    |\ & expresion\ \neq\ && expresion \begin{Bmatrix} expresion.nombre = vacio();\\ expresion.true=inilista(obtenref()); \\  expresion.false=inilista(obtenref()+1);\\ anadir\_inst(if||expresion_1.nombre||\neq||expresion_2.nombre||goto);\\ anadir\_inst(goto);\end{Bmatrix} \\
+    |\ &  expresion\ + && expresion \begin{Bmatrix} expresion.nombre = nuevo\_id();\\ expresion.true = vacio();\\ expresion.false = vacio(); \\  anadir\_inst(expresion.nombre||:=||expresion_1.nombre||+||expresion_2.nombre||;);\end{Bmatrix} \\
+  \end{alignat*}
+
+  \begin{alignat*}{2}
+  |\ & expresion\ - && expresion \begin{Bmatrix} expresion.nombre = nuevo\_id();\\ expresion.true = vacio();\\ expresion.false = vacio(); \\ anadir\_inst(expresion.nombre||:=||expresion_1.nombre||-||expresion_2.nombre||;);\end{Bmatrix} \\
+  |\ & expresion\ * && expresion \begin{Bmatrix} expresion.nombre = nuevo\_id();\\ expresion.true = vacio();\\ expresion.false = vacio(); \\  anadir\_inst(expresion.nombre||:=||expresion_1.nombre||*||expresion_2.nombre||;);\end{Bmatrix} \\
+  |\ & expresion\ / && expresion \begin{Bmatrix} expresion.nombre = nuevo\_id();\\ expresion.true = vacio();\\ expresion.false = vacio(); \\  anadir\_inst(expresion.nombre||:=||expresion_1.nombre||/||expresion_2.nombre||;);\end{Bmatrix} \\\\
+  | &\ id\ &&\begin{Bmatrix}  expresion.nombre = id.nombre;\\ expresion.true = vacio();\\expresion.false = vacio(); \end{Bmatrix} \\
+  | &\ n\_entero\ &&\begin{Bmatrix} expresion.nombre = entero.nombre;\\ expresion.true = vacio();\\expresion.false = vacio(); \end{Bmatrix}\\
+  | &\ n\_real \ &&\begin{Bmatrix} expresion.nombre = real.nombre; \\ expresion.true = vacio();\\expresion.false = vacio(); \end{Bmatrix}\\
+  | &\ (expresion)\ && \begin{Bmatrix} expresion.nombre = expresion_1.nombre;\\ expresion.true = expresion_1.true;\\ expresion.false = expresion_1.false;\end{Bmatrix}\\
+ \end{alignat*}
+\end{center}
+
 \subsubsection{Casos de prueba}
 Los casos de prueba para comprobar el correcto funcionamiento de la implementación de la traducción de la nueva estructura de control:
 \begin{enumerate}
