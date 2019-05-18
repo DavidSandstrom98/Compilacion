@@ -29,7 +29,7 @@ for v_1 from 100 * 2 * 7 + 3  to 50 * v_2 / 3 + 5 do {
 
 v_1 = 356;
 
-for v_2 from 10 * 2 + 3  to 50 * v_2 + 3  do {
+for v_2 from 10 * 2 + 3 to 50 * v_2 + 3  do {
 	while(b_123 < 45){
 		/* COMENTARIO */
 		v_2 = v_2 * 5 / 7;
