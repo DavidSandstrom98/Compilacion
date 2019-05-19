@@ -220,7 +220,7 @@ sentencia : variable TASSIG expresion TSEMIC
 				$$ = $6;
             }
 
-			| TFOR TIDENTIFIER TFROM expresion TTO expresion TDO M TLBRACE 
+			| TFOR TIDENTIFIER TFROM expresion TTO expresion TDO TLBRACE M 
 			{
 				codigo.anadirInstruccion(*$2 + " := " + $4->str + ";");
 				string tmp = codigo.nuevoId();
@@ -230,11 +230,11 @@ sentencia : variable TASSIG expresion TSEMIC
 			lista_de_sentencias TRBRACE TSEMIC
 			{
 				codigo.anadirInstruccion(*$2 + " := " + *$2 + " + " + "1;");
-				codigo.anadirInstruccion("goto " + std::to_string($8+2) + ";");
+				codigo.anadirInstruccion("goto " + std::to_string($9+2) + ";");
 				std::vector<int> a;
-				a.push_back($8+2);
+				a.push_back($9+2);
 				codigo.completarInstrucciones(a, codigo.obtenRef());
-				//codigo.completarInstrucciones($10, $8);
+				codigo.completarInstrucciones(*$11, $9+2);
 				$$=new vector<int>();
 			}
 
