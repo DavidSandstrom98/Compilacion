@@ -32,3 +32,6 @@ program malo_2{
 		skip if (a < c + (c/5));	
 	};
 };
+
+
+

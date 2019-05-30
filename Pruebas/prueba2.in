@@ -36,3 +36,7 @@ program bueno_2{ var a_123: integer;
 		} until e_123 == g_123 else{do{} until g_123 else{};};
 	};
 };
+
+
+
+

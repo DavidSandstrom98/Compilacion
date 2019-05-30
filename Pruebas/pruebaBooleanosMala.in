@@ -22,3 +22,7 @@ if not or v_1 >= v_2 and not v_1 == v_2 then {
 
 	v_2 = 78;
 };
+
+
+
+
